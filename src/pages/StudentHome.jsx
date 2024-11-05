@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout,Card,Col,Row } from 'antd';
+import { Layout,Card,Col,Row,Calendar } from 'antd';
 const { Content } = Layout;
 import '../styles/StudentCards.css'
 
@@ -35,6 +35,28 @@ function StudentCards(){
     )
 }
 
+function UpcomingClasses(){
+    
+    
+    const onPanelChange = (value, mode) => {
+        console.log(value.format('YYYY-MM-DD'), mode);
+      };
+    return(
+        <Layout>
+        <div
+        style = {{
+        padding:'50px',
+            }}
+            >
+        <h2>Upcoming Events</h2>
+        <Calendar onPanelChange={onPanelChange} />
+        </div>
+        <div>
+
+        </div>
+        </Layout>
+    )
+}
 
 
 const StudentHome = () => (
@@ -48,6 +70,7 @@ const StudentHome = () => (
        <h1>Overview</h1>
         <StudentCards />
         </Content>
+        <UpcomingClasses />
     </div>
   );
 
