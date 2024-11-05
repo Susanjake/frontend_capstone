@@ -1,6 +1,6 @@
 import {React,useState} from 'react';
-import { Button,Layout,Input } from 'antd';
-
+import { Avatar,Layout,Input,Space } from 'antd';
+import {UserOutlined} from '@ant-design/icons';
 
 import { MdCircleNotifications } from "react-icons/md";
 const {Header} = Layout;
@@ -33,11 +33,11 @@ function HeaderStudent() {
     style={{ maxWidth: '40vw',
     }} 
   />
-  <MdCircleNotifications 
-  style={{
-    width: 35,
-    height:35,
-  }}/>
+  
+  <Space size={16} wrap >
+  <Avatar icon={<UserOutlined style={{color:'red'}}/>} />
+
+  </Space>
 </Header>
       </div>
     );
