@@ -8,7 +8,6 @@ const {Header} = Layout;
 const { Search } = Input
 
 function HeaderStudent() {
-    const [collapsed, setCollapsed] = useState(false);
     const colorBgContainer = '#fff'; 
      const borderRadiusLG = '8px'; 
     return (
