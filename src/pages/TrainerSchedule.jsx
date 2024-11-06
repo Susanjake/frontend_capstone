@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Calendar, Modal, Input, Form, Badge, TimePicker } from 'antd';
 import moment from 'moment';
-import { current } from '@reduxjs/toolkit';
 
 function TrainerSchedule() {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -68,8 +67,12 @@ function TrainerSchedule() {
   };
 
   return (
+    <>
+    <h1 style={{padding:'20px'}}>Pick a date and schedule a meeting</h1>
     <div>
-      <Calendar onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1,"day"))}/>
+    
+      <Calendar onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1,"day"))}
+      />
       {/* Input form -- modal */}
       <Modal
         title="Schedule a Meeting"
@@ -101,6 +104,7 @@ function TrainerSchedule() {
         </Form>
       </Modal>
     </div>
+    </>
   );
 }
 

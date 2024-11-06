@@ -56,7 +56,7 @@ export default function () {
                 items.push(getItem('Students','trainer_student'));
                 items.push(getItem('Assignments',''));
                 items.push(getItem('Schedule Meeting','trainer_schedule'));
-                items.push(getItem('Attendence',''));
+                items.push(getItem('Attendence','trainer_attendance'));
                 break;
 
 

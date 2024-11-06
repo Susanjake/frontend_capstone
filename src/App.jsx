@@ -12,6 +12,7 @@ import { setAuthenticated } from './app/actions';
 import TrainerHome from './pages/TrainerHome';
 import TrainerStudent from './pages/TrainerStudent';
 import TrainerSchedule from './pages/TrainerSchedule';
+import TrainerAttendance from './pages/TrainerAttendance';
 const { Content } = Layout;
 
 
@@ -24,7 +25,8 @@ const App = () => {
     'trainer_student':<TrainerStudent/>,
     'login': <Login />,
     'register': <Register />,
-    'create_classroom': <CreateClassroom />
+    'create_classroom': <CreateClassroom />,
+    'trainer_attendance': <TrainerAttendance />,
   }
   const currentPage = useSelector((state) => state.currentPage);
   const dispatch = useDispatch();
