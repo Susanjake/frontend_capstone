@@ -9,13 +9,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import Register from './pages/Register';
 import CreateClassroom from './pages/CreateClassroom';
 import { setAuthenticated } from './app/actions';
+import TrainerHome from './pages/TrainerHome';
+import TrainerStudent from './pages/TrainerStudent';
+import TrainerSchedule from './pages/TrainerSchedule';
 const { Content } = Layout;
 
 
 const App = () => {
   const PageMap = {
     'guest_home': <StudentHome />,
+    'trainer_schedule':<TrainerSchedule/>,
     'student_home': <StudentHome />,
+    'trainer_home':<TrainerHome />,
+    'trainer_student':<TrainerStudent/>,
     'login': <Login />,
     'register': <Register />,
     'create_classroom': <CreateClassroom />
