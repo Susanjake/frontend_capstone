@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Divider, List, Skeleton, Radio, Calendar,theme,Checkbox } from 'antd';
+import { Avatar, Divider, List, Skeleton, Radio, Calendar,theme,Checkbox, Button } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
 import '../styles/TrainerAttendance.css';
@@ -20,6 +20,16 @@ async function StudentInfo() {
 }
 
 
+async function GetRandomPic(){
+  const response = await fetch("https://randomuser.me/api/")
+  if(!response.ok){
+    throw new Error("Could not fetch resource");
+  }
+  const picdata = await response.json();
+  //console.log(picdata['results'][0].picture.medium);
+  return picdata['results'][0].picture.medium
+}
+
 function TrainerAttendance() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -36,8 +46,25 @@ function TrainerAttendance() {
     setLoading(true);
     try {
       const newData = await StudentInfo();
-      console.log("New data is",newData);
-      setData(newData.members);
+      const membersWithPics = newData.members.map(
+        async (member) =>{
+          try{
+            const picUrl = await GetRandomPic();
+            return {...member,
+              picture:{large:picUrl}
+            };
+          }catch{
+            return member;
+          }
+        });
+      const updatedMembers = await Promise.all(membersWithPics);
+      setData(updatedMembers);
+
+
+
+
+      
+      
     } catch {
       // Handle error if needed
     } finally {
@@ -69,7 +96,8 @@ function TrainerAttendance() {
     }
   }
   return (
-    <div style=
+    
+    <div className="Maindiv" style=
     {{display:'flex',justifyContent:'center',alignItems:'flex-start',padding:'50px',gap:'20px'}}>
         <div
         
@@ -82,16 +110,9 @@ function TrainerAttendance() {
             border: '1px solid rgba(140, 140, 140, 0.35)',
           }}
         >
-          <h1 style={{fontSize:"20px"}}>Student List</h1>
+          {/* <h1 style={{fontSize:"20px"}}>Student List</h1> */}
           
-          <InfiniteScroll
-            dataLength={data.length}
-            next={loadMoreData}
-            hasMore={data.length < 50}
-            
-            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-            scrollableTarget="scrollableDiv"
-          >
+         
             <List 
               className='listattendance'
               dataSource={data}
@@ -99,7 +120,7 @@ function TrainerAttendance() {
                 <List.Item key={item.user_id}>
                   <List.Item.Meta
                     avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
-                    title={<a href="https://ant.design">{item.username}</a>} // Adjust as needed
+                    title={item.username} // Adjust as needed
                     description={item.user_id}
                   />
                   <Radio.Group>
@@ -108,7 +129,7 @@ function TrainerAttendance() {
                 </List.Item>
               )}
             />
-          </InfiniteScroll>
+          
         </div>
       <div className='ListCalendar' style={{
         width:'50vw',
@@ -117,6 +138,7 @@ function TrainerAttendance() {
         <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
       </div>
     </div>
+
   );
 }
 

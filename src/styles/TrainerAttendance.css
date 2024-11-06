@@ -1,18 +1,13 @@
-/* .scrollableDiv{
-    background-color: rgb(200, 229, 229);
-    border-radius: 2%;
-    backdrop-filter: blur(100px);
-    z-index:10;
-
-} */
-.scrollableDiv{
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(17, 25, 40, 0.75);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
+.Maindiv{
+    /* background-color: #ECDFCC; */
+    /* background-color: #EDE8DC; */
+    background-color: aliceblue;
 }
-
-.listattendance{
-    background-color: blanchedalmond;
+.scrollableDiv{
+    background-color: #fff5;
+    backdrop-filter: blur(7px);
+    box-shadow: 5px 5px rgba(112, 198, 224, 0.333);
+    border-radius: 0.8rem;
+    overflow: hidden;
+    scrollbar-color: 'red';
 }
