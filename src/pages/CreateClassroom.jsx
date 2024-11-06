@@ -1,0 +1,220 @@
+import { Form, Typography, Input, Select, Row, Steps, Button, Flex, Upload, DatePicker } from 'antd';
+import { Content } from 'antd/es/layout/layout';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setPage } from '../app/actions';
+import ModuleAdder from '../components/ModuleAdder';
+import { SendApiRequest } from '../framework/api';
+const { Title } = Typography;
+
+
+export default function () {
+
+    const [trainerList, setTrainerList] = useState([]);
+    const [employeeList, setEmployeeList] = useState([]);
+    const [current, setCurrent] = useState(0);
+    const [formData, setFormData] = useState({});
+    const [form] = Form.useForm();
+
+    function setFormDataName(e) {
+        setFormData({ ...formData, title: e.target.value });
+    }
+
+    function setFormDataTrainerSelect(value) {
+        setFormData({ ...formData, trainer_id: value });
+    }
+
+    function setFormDataMemberSelect(value) {
+        setFormData({ ...formData, members: value });
+    }
+
+    function setFormDataEodPick(value, dateString) {
+        setFormData({ ...formData, eod: dateString })
+        console.log(formData)
+    }
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        async function OnPageLoad() {
+            let data = await SendApiRequest({
+                endpoint: "classroom/get_available_trainers",
+                authenticated: true
+            });
+            if (data.ok) {
+                setTrainerList(data.results);
+            } else {
+                dispatch(setPage("home"));
+            }
+
+            data = await SendApiRequest({
+                endpoint: "classroom/get_available_employees",
+                authenticated: true
+            });
+            if (data.ok) {
+                setEmployeeList(data.results);
+            } else {
+                dispatch(setPage("home"));
+            }
+        }
+        OnPageLoad();
+    }, []);
+
+
+    const steps = [
+        {
+            title: "Classroom Information",
+            content: "Classroom Content"
+        },
+        {
+            title: "Curriculum",
+            content: "Create Curriculum"
+        },
+        {
+            title: "Completion Information",
+            content: "What will be the expected completion time?"
+        }
+    ];
+    function OnFormUpdate(values) {
+        /// todos
+        setFormData({ ...formData, ...form.getFieldsValue() })
+    }
+
+    async function OnCreateClassRoom() {
+        let data = await SendApiRequest({
+            endpoint:"classroom/create_classroom",
+            method:"POST",
+            authenticated:true,
+            data:formData
+        });
+
+        if(data.ok) {
+            dispatch(setPage("home"));
+        } else {
+            // error message set here
+        }
+
+    }
+    const next = () => {
+        setCurrent(current + 1);
+    };
+
+    const prev = () => {
+        setCurrent(current - 1);
+    };
+
+    function GenerateStepContent() {
+        switch (current) {
+            case 0:
+                return (
+                    <>
+                        <Form.Item
+                            label="Title"
+                            name="title"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please provide a title for this class!',
+                                },
+                            ]}
+                        >
+                            <Input name="title" onInput={setFormDataName} />
+                        </Form.Item>
+                        <Form.Item
+                            label="Select Trainer"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select a trainer for this clasroom!',
+                                },
+                            ]}
+                        >
+                            <Select
+                                options={trainerList}
+                                name="trainer_id" onChange={setFormDataTrainerSelect}
+                            >
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Select Employees"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please select employeees for this clasroom!',
+                                },
+                            ]}
+                        >
+                            <Select
+                                mode="multiple"
+                                name="members" onChange={setFormDataMemberSelect}
+                                options={employeeList}
+                            >
+                            </Select>
+                        </Form.Item>
+
+                    </>
+                )
+            case 1:
+                return (
+                    <ModuleAdder />
+                )
+
+            case 2:
+                return (
+                    <Form.Item label="Completion Date">
+                        <DatePicker name="eod" onChange={setFormDataEodPick}>
+                        </DatePicker>
+                    </Form.Item>
+                )
+        }
+    }
+
+    return (
+        <Content style={{
+            margin: '0 16px',
+        }}>
+            <Title>Create Classroom</Title>
+
+            <Steps current={current} items={steps} />
+            <Content style={{
+                margin: '20px'
+            }}>
+                <Form onChange={OnFormUpdate} onFinish={OnFormUpdate} form={form}>
+                    {GenerateStepContent()}
+                    <Flex>
+                        {current > 0 && (
+                            <Form.Item>
+                                <Button
+                                    style={{
+                                        margin: '0 8px',
+                                    }}
+                                    onClick={() => prev()}
+                                >
+                                    Previous
+                                </Button>
+                            </Form.Item>
+                        )}
+                        {current < steps.length - 1 && (
+                            <Form.Item>
+
+                                <Button type="primary" htmlType="submit" onClick={() => next()}>
+                                    Next
+                                </Button>
+                            </Form.Item>
+                        )}
+
+                        {current === steps.length - 1 && (
+                            <Form.Item>
+
+                                <Button type="primary" htmlType="submit" onClick={OnCreateClassRoom}>
+                                    Done
+                                </Button>
+                            </Form.Item>
+                        )}
+                    </Flex>
+                </Form>
+
+            </Content>
+        </Content>
+    )
+}
