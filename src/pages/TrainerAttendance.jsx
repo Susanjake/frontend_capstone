@@ -19,6 +19,7 @@ async function StudentInfo() {
   }
 }
 
+
 function TrainerAttendance() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -48,6 +49,25 @@ function TrainerAttendance() {
     loadMoreData();
   }, []);
 
+  async function OnMarkStudentAttendace(e,idx) {
+    let copy = [...data];
+    let item = {...data[idx]};
+    item.present = e.target.checked;
+    copy[idx] = item;
+    setData(copy);
+
+    let respond = await SendApiRequest({
+      endpoint:"classroom/update_attendance",
+      method:"POST",
+      authenticated:true,
+      data:{users:[...copy]}
+    });
+    if(respond.ok) {
+      // we can add toast here later
+    } else {
+      // same toast but error
+    }
+  }
   return (
     <div style=
     {{display:'flex',justifyContent:'center',alignItems:'flex-start',padding:'50px',gap:'20px'}}>
@@ -75,7 +95,7 @@ function TrainerAttendance() {
             <List 
               className='listattendance'
               dataSource={data}
-              renderItem={(item) => (
+              renderItem={(item,idx) => (
                 <List.Item key={item.user_id}>
                   <List.Item.Meta
                     avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
@@ -83,7 +103,7 @@ function TrainerAttendance() {
                     description={item.user_id}
                   />
                   <Radio.Group>
-                    <Checkbox value="present">Present</Checkbox>
+                    <Checkbox value="present" checked={item.present} onChange={(e) => OnMarkStudentAttendace(e,idx)}>Present</Checkbox>
                   </Radio.Group>
                 </List.Item>
               )}
@@ -96,9 +116,7 @@ function TrainerAttendance() {
       }}>
         <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
       </div>
-     
     </div>
-    
   );
 }
 
