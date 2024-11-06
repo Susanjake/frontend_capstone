@@ -18,8 +18,21 @@ export default function () {
             if (data.ok) {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("role", data.role);
-
-                dispatch(setPage("student_home"));
+                switch(data.role) {
+                    case 'employee':
+                        dispatch(setPage("student_home"));
+                    break;
+                    case 'trainer':
+                        dispatch(setPage("trainer_home"));
+                    break;
+                    case 'manager':
+                        dispatch(setPage("manager_home"));
+                    break;
+                    case 'admin':
+                        dispatch(setPage("admin_home"));
+                    break;
+                }
+                
                 dispatch(setAuthenticated({
                     role: data.role,
                     authenticated: true
