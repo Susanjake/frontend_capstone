@@ -51,6 +51,15 @@ export default function () {
                 items.push(getItem('Home', 'manager_home'));
                 items.push(getItem('Create Classroom', 'create_classroom'));
                 break;
+            case 'trainer':
+                items.push(getItem('Home','trainer_home'));
+                items.push(getItem('Students','trainer_student'));
+                items.push(getItem('Assignments',''));
+                items.push(getItem('Schedule Meeting','trainer_schedule'));
+                items.push(getItem('Attendence',''));
+                break;
+
+
             default:
                 // Add side bar items for student user here
                 items.push(getItem('Home', 'student_home'));

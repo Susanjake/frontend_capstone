@@ -1,0 +1,29 @@
+.student-card{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background-color: rgb(239, 214, 214);
+}
+
+.emp-details{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.frame{
+    padding: 10px;
+}
+
+.activator {
+    background-color: #fff;
+    width: 150px;
+    border-radius: 50%;
+    padding: 6px;
+    border-color: white;
+    
+   
+}

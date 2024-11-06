@@ -7,13 +7,19 @@ import SideBar from './components/SideBar';
 import Login from './pages/Login';
 import { useSelector } from 'react-redux';
 import Register from './pages/Register';
+import TrainerHome from './pages/TrainerHome';
+import TrainerStudent from './pages/TrainerStudent';
+import TrainerSchedule from './pages/TrainerSchedule';
 const { Content } = Layout;
 
 
 const App = () => {
   const PageMap = {
     'guest_home':<StudentHome/>,
+    'trainer_schedule':<TrainerSchedule/>,
     'student_home':<StudentHome/>,
+    'trainer_home':<TrainerHome />,
+    'trainer_student':<TrainerStudent/>,
     'login':<Login/>,
     'register':<Register/>
   }
