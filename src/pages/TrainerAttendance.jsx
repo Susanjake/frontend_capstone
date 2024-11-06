@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Divider, List, Skeleton, Radio } from 'antd';
+import { Avatar, Divider, List, Skeleton, Radio, Calendar,theme,Checkbox } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
+import '../styles/TrainerAttendance.css';
 
 // Define your StudentInfo function to fetch data from the API
 async function StudentInfo() {
@@ -22,6 +23,10 @@ function TrainerAttendance() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
+
+  const onPanelChange = (value, mode) => {
+    console.log(value.format('YYYY-MM-DD'), mode);
+  };
   // Load more data using StudentInfo function
   const loadMoreData = async () => {
     if (loading) {
@@ -44,47 +49,56 @@ function TrainerAttendance() {
   }, []);
 
   return (
-    <div>
-    <div
-    
-      id="scrollableDiv"
-      style={{
-        width:'50vw',
-        height: '100vh',
-        overflow: 'auto',
-        padding: '0 16px',
-        border: '1px solid rgba(140, 140, 140, 0.35)',
-      }}
-    >
-      <h1>Student List</h1>
-      <InfiniteScroll
-        dataLength={data.length}
-        next={loadMoreData}
-        hasMore={data.length < 50}
+    <div style=
+    {{display:'flex',justifyContent:'center',alignItems:'flex-start',padding:'50px',gap:'20px'}}>
+        <div
         
-        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-        scrollableTarget="scrollableDiv"
-      >
-        <List
-          dataSource={data}
-          renderItem={(item) => (
-            <List.Item key={item.user_id}>
-              <List.Item.Meta
-                avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
-                title={<a href="https://ant.design">{item.username}</a>} // Adjust as needed
-                description={item.user_id}
-              />
-              <Radio.Group>
-                <Radio value="present">Present</Radio>
-                <Radio value="absent">Absent</Radio>
-              </Radio.Group>
-            </List.Item>
-          )}
-        />
-      </InfiniteScroll>
+          className="scrollableDiv"
+          style={{
+            width:'50vw',
+            height: '100vh',
+            overflow: 'auto',
+            padding: '0 16px',
+            border: '1px solid rgba(140, 140, 140, 0.35)',
+          }}
+        >
+          <h1 style={{fontSize:"20px"}}>Student List</h1>
+          
+          <InfiniteScroll
+            dataLength={data.length}
+            next={loadMoreData}
+            hasMore={data.length < 50}
+            
+            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+            scrollableTarget="scrollableDiv"
+          >
+            <List 
+              className='listattendance'
+              dataSource={data}
+              renderItem={(item) => (
+                <List.Item key={item.user_id}>
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
+                    title={<a href="https://ant.design">{item.username}</a>} // Adjust as needed
+                    description={item.user_id}
+                  />
+                  <Radio.Group>
+                    <Checkbox value="present">Present</Checkbox>
+                  </Radio.Group>
+                </List.Item>
+              )}
+            />
+          </InfiniteScroll>
+        </div>
+      <div className='ListCalendar' style={{
+        width:'50vw',
+        height:'50vh',
+      }}>
+        <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
+      </div>
+     
     </div>
     
-    </div>
   );
 }
 
