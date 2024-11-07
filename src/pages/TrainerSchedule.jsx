@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Calendar, Modal, Input, Form, Badge, TimePicker } from 'antd';
+import { Calendar, Modal, Input, Form, Badge, TimePicker, Flex } from 'antd';
 import moment from 'moment';
 
 function TrainerSchedule() {
@@ -68,8 +68,8 @@ function TrainerSchedule() {
 
   return (
     <>
-    <h1 style={{padding:'20px'}}>Pick a date and schedule a meeting</h1>
-    <div>
+    <h1 style={{textAlign:"center",fontSize:"20px",fontWeight:600}}>Pick a date and schedule a meeting</h1>
+    <Flex align="center" justify="center">
     
       <Calendar onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1,"day"))}
       />
@@ -103,7 +103,7 @@ function TrainerSchedule() {
           
         </Form>
       </Modal>
-    </div>
+    </Flex>
     </>
   );
 }
