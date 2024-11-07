@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Divider, List, Skeleton, Radio, Calendar,theme,Checkbox, Button } from 'antd';
+import { Avatar, Divider, List, Skeleton, Radio, Calendar, theme, Checkbox, Button } from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
 import '../styles/TrainerAttendance.css';
+import { height } from '@mui/system';
 
 // Define your StudentInfo function to fetch data from the API
 async function StudentInfo() {
   try {
     let data = await SendApiRequest({
-      endpoint: "classroom/get_employees_under_trainer", 
+      endpoint: "classroom/get_employees_under_trainer",
       authenticated: true,
     });
-    console.log("Data is",data);
+    console.log("Data is", data);
     return data;
   } catch (error) {
     console.error("Error fetching student info:", error);
@@ -20,9 +21,9 @@ async function StudentInfo() {
 }
 
 
-async function GetRandomPic(){
+async function GetRandomPic() {
   const response = await fetch("https://randomuser.me/api/")
-  if(!response.ok){
+  if (!response.ok) {
     throw new Error("Could not fetch resource");
   }
   const picdata = await response.json();
@@ -47,13 +48,14 @@ function TrainerAttendance() {
     try {
       const newData = await StudentInfo();
       const membersWithPics = newData.members.map(
-        async (member) =>{
-          try{
+        async (member) => {
+          try {
             const picUrl = await GetRandomPic();
-            return {...member,
-              picture:{large:picUrl}
+            return {
+              ...member,
+              picture: { large: picUrl }
             };
-          }catch{
+          } catch {
             return member;
           }
         });
@@ -63,8 +65,8 @@ function TrainerAttendance() {
 
 
 
-      
-      
+
+
     } catch {
       // Handle error if needed
     } finally {
@@ -76,66 +78,72 @@ function TrainerAttendance() {
     loadMoreData();
   }, []);
 
-  async function OnMarkStudentAttendace(e,idx) {
+  async function OnMarkStudentAttendace(e, idx) {
     let copy = [...data];
-    let item = {...data[idx]};
+    let item = { ...data[idx] };
     item.present = e.target.checked;
     copy[idx] = item;
     setData(copy);
 
     let respond = await SendApiRequest({
-      endpoint:"classroom/update_attendance",
-      method:"POST",
-      authenticated:true,
-      data:{users:[...copy]}
+      endpoint: "classroom/update_attendance",
+      method: "POST",
+      authenticated: true,
+      data: { users: [...copy] }
     });
-    if(respond.ok) {
+    if (respond.ok) {
       // we can add toast here later
     } else {
       // same toast but error
     }
   }
   return (
-    
+
     <div className="Maindiv" style=
-    {{display:'flex',justifyContent:'center',alignItems:'flex-start',padding:'50px',gap:'20px'}}>
-        <div
-        
-          className="scrollableDiv"
-          style={{
-            width:'50vw',
-            height: '100vh',
-            overflow: 'auto',
+      {{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '50px', gap: '20px' }}>
+      <div style={{
+            width: '50vw',
+            height: '55vh',
             padding: '0 16px',
             border: '1px solid rgba(140, 140, 140, 0.35)',
+      }}
+      className="scrollableDiv"
+      >
+        <h1 style={{ fontSize: "20px",fontWeight:600,textAlign:"center" }}>Student List</h1>
+        <div
+          style={{
+            overflow: 'scroll',
+            scrollbarColor: "rgb(255,255,255,1) transparent",
+            height:"100%"
           }}
         >
-          {/* <h1 style={{fontSize:"20px"}}>Student List</h1> */}
-          
-         
-            <List 
-              className='listattendance'
-              dataSource={data}
-              renderItem={(item,idx) => (
-                <List.Item key={item.user_id}>
-                  <List.Item.Meta
-                    avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
-                    title={item.username} // Adjust as needed
-                    description={item.user_id}
-                  />
-                  <Radio.Group>
-                    <Checkbox value="present" checked={item.present} onChange={(e) => OnMarkStudentAttendace(e,idx)}>Present</Checkbox>
-                  </Radio.Group>
-                </List.Item>
-              )}
-            />
-          
+          <List
+            style={{
+              //height:"50vh"
+            }}
+            className='listattendance'
+            dataSource={data}
+            renderItem={(item, idx) => (
+              <List.Item key={item.user_id}>
+                <List.Item.Meta
+                  avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
+                  title={item.username} // Adjust as needed
+                  description={item.user_id}
+                />
+                <Radio.Group>
+                  <Checkbox value="present" checked={item.present} onChange={(e) => OnMarkStudentAttendace(e, idx)}>Present</Checkbox>
+                </Radio.Group>
+              </List.Item>
+            )}
+          />
+
         </div>
+      </div>
       <div className='ListCalendar' style={{
-        width:'50vw',
-        height:'50vh',
+        width: '50vw',
+        height: '50vh',
       }}>
-        <Calendar fullscreen={false} onPanelChange={onPanelChange}/>
+        <Calendar fullscreen={false} onPanelChange={onPanelChange} />
       </div>
     </div>
 
