@@ -3,41 +3,48 @@ import { Avatar, Divider, List, Skeleton, Radio, Calendar, theme, Checkbox, Butt
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
 import '../styles/TrainerAttendance.css';
-import { height } from '@mui/system';
 
 // Define your StudentInfo function to fetch data from the API
-async function StudentInfo() {
-  try {
-    let data = await SendApiRequest({
-      endpoint: "classroom/get_employees_under_trainer",
-      authenticated: true,
-    });
-    console.log("Data is", data);
-    return data;
-  } catch (error) {
-    console.error("Error fetching student info:", error);
-    return [];
-  }
-}
 
-
-async function GetRandomPic() {
-  const response = await fetch("https://randomuser.me/api/")
-  if (!response.ok) {
-    throw new Error("Could not fetch resource");
-  }
-  const picdata = await response.json();
-  //console.log(picdata['results'][0].picture.medium);
-  return picdata['results'][0].picture.medium
-}
 
 function TrainerAttendance() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(undefined);
+
+  async function StudentInfo() {
+    try {
+      setLoading(true);
+      let data = await SendApiRequest({
+        endpoint: "classroom/get_employees_under_trainer",
+        authenticated: true,
+        data: {date:selectedDate},
+        method:"POST"
+      });
+      console.log("Data is", data);
+      setLoading(false)
+      return data;
+    } catch (error) {
+      console.error("Error fetching student info:", error);
+      return [];
+    }
+  }
 
 
-  const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
+  async function GetRandomPic() {
+    const response = await fetch("https://randomuser.me/api/")
+    if (!response.ok) {
+      throw new Error("Could not fetch resource");
+    }
+    const picdata = await response.json();
+    //console.log(picdata['results'][0].picture.medium);
+    return picdata['results'][0].picture.medium
+  }
+  const onPanelChange = async (value) => {
+    console.log("Here")
+    setSelectedDate(value.format('YYYY-MM-DD'))
+    await loadMoreData();
+    console.log(value.format('YYYY-MM-DD'));
   };
   // Load more data using StudentInfo function
   const loadMoreData = async () => {
@@ -61,12 +68,6 @@ function TrainerAttendance() {
         });
       const updatedMembers = await Promise.all(membersWithPics);
       setData(updatedMembers);
-
-
-
-
-
-
     } catch {
       // Handle error if needed
     } finally {
@@ -89,7 +90,7 @@ function TrainerAttendance() {
       endpoint: "classroom/update_attendance",
       method: "POST",
       authenticated: true,
-      data: { users: [...copy] }
+      data: { users: [...copy], date: selectedDate }
     });
     if (respond.ok) {
       // we can add toast here later
@@ -102,19 +103,19 @@ function TrainerAttendance() {
     <div className="Maindiv" style=
       {{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '50px', gap: '20px' }}>
       <div style={{
-            width: '50vw',
-            height: '55vh',
-            padding: '0 16px',
-            border: '1px solid rgba(140, 140, 140, 0.35)',
+        width: '50vw',
+        height: '55vh',
+        padding: '0 16px',
+        border: '1px solid rgba(140, 140, 140, 0.35)',
       }}
-      className="scrollableDiv"
+        className="scrollableDiv"
       >
-        <h1 style={{ fontSize: "20px",fontWeight:600,textAlign:"center" }}>Student List</h1>
+        <h1 style={{ fontSize: "20px", fontWeight: 600, textAlign: "center" }}>Student List</h1>
         <div
           style={{
             overflow: 'scroll',
             scrollbarColor: "rgb(255,255,255,1) transparent",
-            height:"100%"
+            height: "100%"
           }}
         >
           <List
@@ -143,7 +144,7 @@ function TrainerAttendance() {
         width: '50vw',
         height: '50vh',
       }}>
-        <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+        <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onPanelChange} />
       </div>
     </div>
 
