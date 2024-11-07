@@ -13,20 +13,21 @@ import TrainerHome from './pages/TrainerHome';
 import TrainerStudent from './pages/TrainerStudent';
 import TrainerSchedule from './pages/TrainerSchedule';
 import TrainerAttendance from './pages/TrainerAttendance';
+import ManagerHome from './pages/ManagerHome';
 const { Content } = Layout;
-
 
 const App = () => {
   const PageMap = {
     'guest_home': <StudentHome />,
-    'trainer_schedule':<TrainerSchedule/>,
+    'trainer_schedule': <TrainerSchedule />,
     'student_home': <StudentHome />,
-    'trainer_home':<TrainerHome />,
-    'trainer_student':<TrainerStudent/>,
+    'trainer_home': <TrainerHome />,
+    'trainer_student': <TrainerStudent />,
     'login': <Login />,
     'register': <Register />,
     'create_classroom': <CreateClassroom />,
     'trainer_attendance': <TrainerAttendance />,
+    'manager_home': <ManagerHome />
   }
   const currentPage = useSelector((state) => state.currentPage);
   const dispatch = useDispatch();
@@ -43,13 +44,16 @@ const App = () => {
       }}
     >
       <SideBar />
-      <Layout>
+      <Layout style={{
+          backgroundImage:"url('assets/background.jpg')"
+          //backgroundColor:"aliceblue"
+        }}>
         <HeaderStudent />
-        <Content>
-          {PageMap[currentPage]}
-        </Content>
-      </Layout>
+        <Content >
+        {PageMap[currentPage]}
+      </Content>
     </Layout>
+    </Layout >
   );
 };
 export default App;
