@@ -46,7 +46,7 @@ const App = () => {
       <SideBar />
       <Layout style={{
           backgroundImage:"url('assets/background.jpg')"
-          //backgroundColor:"aliceblue"
+          // backgroundColor:"#AFC1D6"
         }}>
         <HeaderStudent />
         <Content >
