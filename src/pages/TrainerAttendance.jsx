@@ -3,6 +3,7 @@ import { Avatar, Divider, List, Skeleton, Radio, Calendar, theme, Checkbox, Butt
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
 import '../styles/TrainerAttendance.css';
+import moment from 'moment';
 
 // Define your StudentInfo function to fetch data from the API
 
@@ -144,7 +145,7 @@ function TrainerAttendance() {
         width: '50vw',
         height: '50vh',
       }}>
-        <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onPanelChange} />
+        <Calendar fullscreen={false} onPanelChange={onPanelChange} onSelect={onPanelChange} disabledDate={(current) => current.isAfter(moment())} />
       </div>
     </div>
 

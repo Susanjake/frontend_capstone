@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout,Card,Col,Row,Calendar,Table, Flex } from 'antd';
 const { Content } = Layout;
 import { LineChart } from '@mui/x-charts/LineChart';
+import { SendApiRequest } from '../framework/api';
 
 
-
+async function getAbsentees(){
+  try{
+    let data = await SendApiRequest({
+      endpoint:"classroom/get_absentees_list",
+      authenticated:true,
+    });
+    console.log("Student absentees data",data);
+    return data
+  }catch (error){
+    console.log(error);
+  }
+}
 
 function TrainerCards(){
   return (
@@ -31,7 +43,7 @@ function TrainerCards(){
 function AttendenceGraph(){
   return (
     <>
-    <h4>Attendence Analysis
+    <h4>Attendance Analysis
     </h4>
     <LineChart style={{width:'100%'}}
       xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
@@ -49,7 +61,22 @@ function AttendenceGraph(){
 }
 
 function TableAbsentees(){
-  
+  const [absentees,setAbsentees] = useState([]);
+  const [errormsg,setErrorMsg] = useState('');
+  //use effect runs after render
+  useEffect(()=>{
+    async function fetchAbsentees(){
+      let data = await getAbsentees();
+      if(data.ok === true){
+        setAbsentees(data.absentees);
+      }
+      else{
+        setErrorMsg(data.error);
+      }
+    }
+    fetchAbsentees();
+  },[]);
+
   const dataSource = [
     {
       key: '1',
@@ -67,21 +94,24 @@ function TableAbsentees(){
   
   const columns = [
     {
-      title: 'Rollnumber',
-      dataIndex: 'rollno',
-      key: 'rollno',
+      title: 'EmpId',
+      dataIndex: 'user_id',
+      key: 'user_id',
     },
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'username',
+      key: 'username',
     },
  
   ];
   return(
     <>
     <h4>Absentees Today</h4>
-  <Table dataSource={dataSource} columns={columns} />
+  {errormsg === '' ?
+  <Table dataSource={absentees} columns={columns} /> :
+  <h1>{errormsg}</h1>
+}
   </>
   )
 

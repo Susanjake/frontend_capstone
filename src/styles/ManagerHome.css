@@ -1,0 +1,31 @@
+
+
+.dashboardHeader{
+    padding-left:20px;
+    padding-top:10px;
+    font-weight: 600;
+    font-size: 25px;
+    text-align: left;
+    color:azure;
+}
+.toprow{
+    padding: 20px;
+}
+.topcards{
+    background-color: rgba(246, 247, 246, 0.333);
+    backdrop-filter: blur(7px);
+    box-shadow: 5px 5px rgba(112, 198, 224, 0.333);
+    border-radius: 0.8rem;    
+    height: 35vh;
+    text-align: center;
+}
+
+.topcards h1{
+    color:azure;
+    font-size: medium;
+}
+
+.animatedNumber{
+    font-size: 5rem;
+    color: rgb(13, 156, 99);
+}

@@ -47,9 +47,9 @@ const App = () => {
     >
       <SideBar />
       <Layout style={{
-        backgroundImage: "url('assets/background.jpg')"
-        //backgroundColor:"aliceblue"
-      }}>
+          backgroundImage:"url('assets/background.jpg')"
+          // backgroundColor:"#AFC1D6"
+        }}>
         <HeaderStudent />
         <Content >
           {PageMap[currentPage]}
