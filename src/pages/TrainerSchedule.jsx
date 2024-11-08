@@ -27,6 +27,14 @@ function TrainerSchedule() {
     const formattedDate = value.format('YYYY-MM-DD');
     console.log(formattedDate)
     setSelectedDate(formattedDate);
+    setFormData({
+      ...formData,
+      [selectedDate]: {
+        ...formData[selectedDate],
+        start_time:dayjs(),
+        end_time:dayjs(),
+      },
+    });
     setIsModalVisible(true);
   };
 
