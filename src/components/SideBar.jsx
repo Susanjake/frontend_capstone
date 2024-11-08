@@ -64,6 +64,7 @@ export default function () {
             default:
                 // Add side bar items for student user here
                 items.push(getItem('Home', 'student_home'));
+                items.push(getItem('Meetings','attend_meeting'))
         }
         // Common for authenticated user
         items.push(getItem('SignOut', 'sign_out'));
@@ -87,6 +88,9 @@ export default function () {
                 mode="inline" items={items}
                 selectedKeys={[currentPage]}
                 onClick={OnUserClickSideBarItem}
+                style={{
+                    backgroundColor:"transparent",
+                }}
             />
         </Sider>
     )

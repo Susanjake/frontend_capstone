@@ -14,6 +14,7 @@ import TrainerStudent from './pages/TrainerStudent';
 import TrainerSchedule from './pages/TrainerSchedule';
 import TrainerAttendance from './pages/TrainerAttendance';
 import ManagerHome from './pages/ManagerHome';
+import StudentAttendMeeting from './pages/StudentAttendMeeting';
 const { Content } = Layout;
 
 const App = () => {
@@ -27,7 +28,8 @@ const App = () => {
     'register': <Register />,
     'create_classroom': <CreateClassroom />,
     'trainer_attendance': <TrainerAttendance />,
-    'manager_home': <ManagerHome />
+    'manager_home': <ManagerHome />,
+    'attend_meeting': <StudentAttendMeeting />
   }
   const currentPage = useSelector((state) => state.currentPage);
   const dispatch = useDispatch();
@@ -50,9 +52,9 @@ const App = () => {
         }}>
         <HeaderStudent />
         <Content >
-        {PageMap[currentPage]}
-      </Content>
-    </Layout>
+          {PageMap[currentPage]}
+        </Content>
+      </Layout>
     </Layout >
   );
 };
