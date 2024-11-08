@@ -32,6 +32,11 @@ export default function () {
         setFormData({ ...formData, eod: dateString })
         console.log(formData)
     }
+    function setFormDataStartDatePick(value, dateString) {
+        setFormData({ ...formData, start_date: dateString })
+        console.log(formData)
+    }
+   
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -81,13 +86,13 @@ export default function () {
 
     async function OnCreateClassRoom() {
         let data = await SendApiRequest({
-            endpoint:"classroom/create_classroom",
-            method:"POST",
-            authenticated:true,
-            data:formData
+            endpoint: "classroom/create_classroom",
+            method: "POST",
+            authenticated: true,
+            data: formData
         });
 
-        if(data.ok) {
+        if (data.ok) {
             dispatch(setPage("home"));
         } else {
             // error message set here
@@ -161,10 +166,16 @@ export default function () {
 
             case 2:
                 return (
-                    <Form.Item label="Completion Date">
-                        <DatePicker name="eod" onChange={setFormDataEodPick}>
-                        </DatePicker>
-                    </Form.Item>
+                    <>
+                        <Form.Item label="Start Date">
+                            <DatePicker name="start_date" onChange={setFormDataStartDatePick}>
+                            </DatePicker>
+                        </Form.Item>
+                        <Form.Item label="Completion Date">
+                            <DatePicker name="eod" onChange={setFormDataEodPick}>
+                            </DatePicker>
+                        </Form.Item>
+                    </>
                 )
         }
     }
