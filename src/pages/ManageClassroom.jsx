@@ -1,12 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress } from 'antd';
+import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover, Drawer} from 'antd';
 import { SendApiRequest } from '../framework/api';
+import '../styles/manageclassroom.css';
+import Timeline from '../pages/Timeline';
+
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [tableData, setTableData] = useState([]);
-  const showModal = () => {
+const [isModalOpen, setIsModalOpen] = useState(false);
+const [tableData, setTableData] = useState([]);
+const [modalData,setModalData] = useState([]);
+const [curriculumData, setCurriculumData] = useState({});
+const [open, setOpen] = useState(false);
+
+// const showDrawer = (record) => {
+//     setCurriculumData(record.modules); 
+//     console.log(record.modules);
+//     setOpen(true);
+//   };
+  const showDrawer = (record) => {
+    const transformedEvents = record.modules.map((module, index) => ({
+        heading: `Module ${index + 1}`,    
+        subHeading: module.module_name,    
+        direction: index % 2 === 0 ? "right" : "left"  
+    }));
+    setCurriculumData(transformedEvents);  
+    console.log(curriculumData);
+    setOpen(true);  
+};
+const onClose = () => {
+    setOpen(false);
+  };
+
+  const showModal = (record) => {
+    setModalData(record);
     setIsModalOpen(true);
+    
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -25,8 +53,11 @@ function App() {
       setTableData(data['classes'])
 
     }
+   
     load_data()
-  }, [])
+  }, 
+  
+  [])
   const columns = [
     {
       title: 'Classroom',
@@ -38,7 +69,11 @@ function App() {
       title: 'Curriculum',
       dataIndex: 'curriculum',
       key: 'curriculum',
-      render: (text) => <a>{text}</a>,
+      render: (_, record) => (
+        <Button type="link" onClick={() => showDrawer(record)}>
+        Show Curriculum
+      </Button>
+      )
     },
     {
       title: 'Start Date',
@@ -56,99 +91,46 @@ function App() {
       dataIndex: 'employee_count',
     },
     {
-      title: 'Progress',
+        title: (
+            <Popover
+              placement="topLeft"
+              title="Progress"
+              content="Percentage completion with regards to number of expected meetings"
+              trigger="hover"
+            >
+              <span>Progress</span>
+            </Popover>
+        ),
       key: 'progress',
       dataIndex: 'progress',
       render: (data, record) => (
         <Space size="middle">
           <Progress type="circle" size="small" percent={parseInt(data)} />
-          <a onClick={showModal}>Learn More</a>
+          <a onClick={()=>{
+            showModal(record)
+            }}>Learn More</a>
         </Space>
       ),
     },
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '4',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '5',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '6',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
+ 
   const col2 = [
     {
-      title: 'Employeeid',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Employee ID',
+      dataIndex: 'user_id',
+      key: 'user_id',
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Employeename',
-      dataIndex: 'name',
-      key: 'name',
+      title: 'Employee Name',
+      dataIndex: 'username',
+      key: 'username',
     },
 
   ];
-  const data2 = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+
+
+
   return (
     <>
       <Divider>Classroom Data</Divider>
@@ -156,11 +138,34 @@ function App() {
       <Modal title="Classroom Details" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Table
           columns={col2}
-          dataSource={data2}
+          dataSource={modalData.members}
           bordered
-          title={() => 'Class number : no Trainer name: trainer_name'}
+          title={() => (
+            <>
+             <strong> Trainer : {modalData.trainer_name}</strong>
+            </>
+          )}
+          
         />
       </Modal>
+      <Drawer
+        className='MistyDrawer'
+        title="Curriculum Details"
+        placement='bottom'
+        width={400}
+        height={400}
+        onClose={onClose}
+        open={open}
+        extra={
+          <Space>
+            {/* <Button type="primary" onClick={onClose}>
+              OK
+            </Button> */}
+          </Space>
+        }
+      >
+    <Timeline eventData={curriculumData}/>
+      </Drawer>
     </>
   )
 }

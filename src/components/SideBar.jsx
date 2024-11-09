@@ -53,7 +53,7 @@ export default function () {
                 items.push(getItem('Create Classroom', 'create_classroom'));
                 items.push(getItem('Manage Classroom','manage_classroom'));
                 items.push(getItem('Manage Employees','manage_employees'));
-                items.push(getItem('Manage Trainers',''));
+                items.push(getItem('Manage Trainers','manage_trainers'));
 
                 break;
             case 'trainer':
