@@ -1,4 +1,4 @@
-import { Button, Checkbox, Form, Input, Row } from 'antd';
+import { Button, Checkbox, Form, Input, Row,Card } from 'antd';
 import { useDispatch } from 'react-redux';
 import { setAuthenticated, setPage } from '../app/actions';
 import { SendApiRequest } from '../framework/api';
@@ -47,6 +47,12 @@ export default function () {
 
     return (
         <Row type="flex" justify="center" align="middle" style={{ minHeight: "90vh" }}>
+            <Card style={{
+                backdropFilter:"blur(5px)",
+                backgroundColor:"rgba(255, 255, 255, .55)"
+            }}>
+            <Row type="flex" justify="center" align="middle">
+        
             <Form
                 name="basic"
                 labelCol={{
@@ -113,6 +119,8 @@ export default function () {
                     </Button>
                 </Form.Item>
             </Form>
+            </Row>
+            </Card>
         </Row>
     );
 }
