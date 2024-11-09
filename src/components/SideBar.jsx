@@ -51,7 +51,10 @@ export default function () {
                 // Add side bar items for manager here
                 items.push(getItem('Home', 'manager_home'));
                 items.push(getItem('Create Classroom', 'create_classroom'));
-                items.push(getItem('Manage Classroom',''))
+                items.push(getItem('Manage Classroom','manage_classroom'));
+                items.push(getItem('Manage Employees','manage_employees'));
+                items.push(getItem('Manage Trainers',''));
+
                 break;
             case 'trainer':
                 items.push(getItem('Home','trainer_home'));

@@ -49,7 +49,7 @@ export default function () {
         <Divider className='dashboardDivider'>
         
         </Divider>
-            <Row gutter={16} className='toprow'>
+            {/* <Row gutter={16} className='toprow'>
                 <Col span={8}>
                     <Card bordered={false} className='topcards'>
                     <Divider><h1>Classrooms</h1></Divider>
@@ -71,11 +71,12 @@ export default function () {
                     
                     </Card>
                 </Col>
-            </Row>
+            </Row> */}
        
+       <CardFlip></CardFlip>
         <Divider></Divider>
         <TickPlacementBars></TickPlacementBars>
-        <CardFlip></CardFlip>
+        
         </>
 
     )
