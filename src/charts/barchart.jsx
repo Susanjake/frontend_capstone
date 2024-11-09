@@ -13,7 +13,7 @@ const dummyData = [
 const chartSetting = {
   xAxis: [
     {
-      label: 'Completion rates',
+      label: 'Completion Timeline',
       scaleType: 'linear',
     },
   ],
@@ -43,7 +43,7 @@ const chartSetting = {
 function TickPlacementBars() {
   return (
     <>
-    <h1 style={{color:'azure',fontSize:'25px'}}>Classroom Statistics</h1>
+    <h1 style={{color:'azure',fontSize:'25px',justifyContent:'center'}}>Completion Timeline</h1>
    
     <div style={{ width: '100%', display:'flex',justifyContent:'center'}}>
       
