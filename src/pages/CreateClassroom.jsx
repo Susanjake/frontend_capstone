@@ -93,7 +93,7 @@ export default function () {
         });
 
         if (data.ok) {
-            dispatch(setPage("home"));
+            dispatch(setPage("manager_home"));
         } else {
             // error message set here
         }
