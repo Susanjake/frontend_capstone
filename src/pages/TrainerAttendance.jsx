@@ -17,7 +17,7 @@ function TrainerAttendance() {
     try {
       setLoading(true);
       let data = await SendApiRequest({
-        endpoint: "classroom/get_employees_under_trainer",
+        endpoint: "classroom/get_employees_attendance_list",
         authenticated: true,
         data: {date:selectedDate},
         method:"POST"
@@ -55,6 +55,7 @@ function TrainerAttendance() {
     setLoading(true);
     try {
       const newData = await StudentInfo();
+      
       const membersWithPics = newData.members.map(
         async (member) => {
           try {
