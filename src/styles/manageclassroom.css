@@ -1,0 +1,10 @@
+.MistyDrawer{
+    background: rgba(210, 231, 231, 0.731) !important;
+    /* background: aliceblue !important; */
+    border-radius: 10px !important;
+    backdrop-filter: blur(5px) !important; /* Blurring the background */
+    -webkit-backdrop-filter: blur(10px) !important; /* For Safari support */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Subtle border for glass effect */
+    padding: 20px !important; /* Padding inside the card */
+    box-shadow: 0 4px 10px rgba(246, 239, 239, 0.1) !important; /* Optional shadow for a soft depth effect */
+}
