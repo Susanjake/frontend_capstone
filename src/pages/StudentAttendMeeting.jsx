@@ -43,16 +43,22 @@ export default function () {
         let end_time_obj = dayjs(formData[selectedDate]?.end_time, "HH:mm:ss");
 
         if (dayjs().isAfter(start_time_obj) && dayjs().isBefore(end_time_obj) && dayjs().isSame(selectedDateobj, 'date')) {
+
             data['meeting_id'] = meeting_id;
-            await SendApiRequest({
+            let response = await SendApiRequest({
                 endpoint: "classroom/attend_meeting",
                 authenticated: true,
                 method: "POST",
                 data: data
             })
-            setIsModalVisible(false);
+            if (response.ok) {
+                setIsModalVisible(false);
 
-            window.open(`//${formData[selectedDate]?.meeting_link}`, '_blank');
+
+                window.open(`//${formData[selectedDate]?.meeting_link}`, '_blank');
+            } else {
+                setMeetingErorr(response.error)
+            }
         } else {
             setMeetingErorr("This meeting is not currently active!")
         }

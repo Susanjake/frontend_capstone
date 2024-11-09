@@ -11,6 +11,7 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 import { useDispatch, useSelector } from "react-redux";
+import { colorBgContainer } from "../app/theme";
 
 
 function getItem(label, key, icon, children) {
@@ -31,7 +32,7 @@ export default function () {
     function OnUserClickSideBarItem(e) {
         if (e.key === "sign_out") {
             localStorage.clear();
-            dispatch(setPage("default_home"));
+            dispatch(setPage("guest_home"));
             dispatch(setAuthenticated({ authenticated: false, role: '' }))
             window.location.reload()
         } else {
@@ -58,6 +59,7 @@ export default function () {
                 // items.push(getItem('Assignments',''));
                 items.push(getItem('Schedule Meeting','trainer_schedule'));
                 items.push(getItem('Attendance','trainer_attendance'));
+                items.push(getItem('Meetings','attend_meeting'))
                 break;
 
 
@@ -71,7 +73,7 @@ export default function () {
 
     } else {
         // Side bar item for non logged in user
-        items.push(getItem('Home', 'student_home'));
+        items.push(getItem('Home', 'guest_home'));
         items.push(getItem('Login', 'login'));
         items.push(getItem('Register', 'register'));
     }
@@ -80,16 +82,23 @@ export default function () {
     const currentPage = useSelector((state) => state.currentPage);
 
     return (
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+        <Sider 
+            collapsible 
+            collapsed={collapsed} 
+            onCollapse={(value) => setCollapsed(value)}
+            style={{
+                background:colorBgContainer,
+            }}    
+        >
             <div className="demo-logo-vertical" />
             <Menu
-                theme="dark"
                 defaultSelectedKeys={['home']}
                 mode="inline" items={items}
                 selectedKeys={[currentPage]}
                 onClick={OnUserClickSideBarItem}
                 style={{
-                    backgroundColor:"transparent",
+                   backgroundColor:"transparent",
+                   backdropFilter:"blur(5px)"
                 }}
             />
         </Sider>
