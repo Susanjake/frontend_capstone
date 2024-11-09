@@ -17,6 +17,7 @@ import ManagerHome from './pages/ManagerHome';
 import StudentAttendMeeting from './pages/StudentAttendMeeting';
 import ManageClassroom from './pages/ManageClassroom';
 import ManageEmployees from './pages/ManageEmployees';
+import ManageTrainers from './pages/ManageTrainers';
 import GuestHome from './pages/GuestHome';
 import { colorBgContainer } from './app/theme';
 const { Content } = Layout;
@@ -39,6 +40,7 @@ const App = () => {
     'attend_meeting': <StudentAttendMeeting />,
     'manage_classroom':<ManageClassroom />,
     'manage_employees':<ManageEmployees/>,
+    'manage_trainers': <ManageTrainers/>
   }
   const currentPage = useSelector((state) => state.currentPage);
   const dispatch = useDispatch();

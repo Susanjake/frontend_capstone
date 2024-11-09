@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover, Flex } from 'antd';
+import { SendApiRequest } from '../framework/api';
 
 function ManageEmployees() {
+
+  const [tableData,setTableData] = useState([]);
+
+  useEffect(() => {
+    async function load_data() {
+      let data = await SendApiRequest({
+        endpoint:"classroom/get_employees_under_manager",
+        authenticated:true,
+      });
+      setTableData(data["employees"]);
+    }
+    load_data();
+  },[])
   const columns = [
     {
       title: 'Employee ID',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'user_id',
+      key: 'user_id',
       render: (text) => <a>{text}</a>,
     },
     {
@@ -20,48 +34,43 @@ function ManageEmployees() {
               <span>Employee Name</span>
             </Popover>
         ),
-        dataIndex:'name',
+        dataIndex:'username',
+    },
+    {
+      title:'Classroom',
+      dataIndex:'classroom',
+      render: (text) => <a>{text}</a>,
     },
     {
       title: 'Attendance Percentage',
-      dataIndex: 'age',
+      dataIndex: 'attendance_percentage',
+      align:'center',
       render: (_, record) => (
-        <Space size="middle">
-          <Progress percent={30} />
-        </Space>
+        // <Flex vertical gap="small" style={{ width: "50%" }}>
+        <Progress
+        percent={record.attendance_percentage}
+        percentPosition={{
+          align: 'center',
+          type: 'inner',
+        }}
+        size={[40, 10]}
+        type="dashboard"
+        strokeColor="#B7EB8F"
+      />
+        // </Flex>
       ),
     },
   ];
 
-  const dataSource = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
+  
   return (
     <>
       <Divider>Employee Performance</Divider>
-      <div style={{ padding: '50px' }}>
-        <Table dataSource={dataSource} columns={columns} />
+      <div >
+        <Table pagination={{pageSize:5,}} dataSource={tableData} columns={columns} style={{
+          backgroundColor:"rgb(255,255,255,0.52)",
+          backdropFilter:"blur(5px)"
+        }} />
       </div>
     </>
   );
