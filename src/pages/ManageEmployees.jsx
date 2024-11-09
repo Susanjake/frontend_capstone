@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress } from 'antd';
+import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover } from 'antd';
 
 function ManageEmployees() {
   const columns = [
@@ -10,10 +10,17 @@ function ManageEmployees() {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Employee Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <a>{text}</a>,
+        title: (
+            <Popover
+              placement="topLeft"
+              title="Employee Name"
+              content="Here's pop up Text"
+              trigger="hover"
+            >
+              <span>Employee Name</span>
+            </Popover>
+        ),
+        dataIndex:'name',
     },
     {
       title: 'Attendance Percentage',
