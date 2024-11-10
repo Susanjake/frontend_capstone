@@ -86,7 +86,7 @@ export default function Dashboard() {
     }, [selectedClassroom]);
 
     return (
-        <Layout>
+        <Layout style={{paddingLeft:'80px'}}>
             <Title>Dashboard</Title>
             <Divider className='dashboardDivider' />
             <Layout style={{ height: "25%" }}>
@@ -142,6 +142,30 @@ export default function Dashboard() {
                     {/* Bar Chart */}
                     <Col span={8}>
                         
+
+                        <Card style={{ width: "100%", borderColor: "black",height:"100%" }} bordered>
+                            <div className='BarchartDiv' style={{ flex: '1', backgroundColor: 'white' }}>
+                                <BarChart
+                                    width={550}
+                                    height={300}
+                                    data={attendenceaBardata}
+                                    barSize={40}
+                                    margin={{ right: 4 }}
+                                >
+                                    
+                                    <XAxis dataKey={"x"}
+                                        tick={false}
+                                    />
+                                    <YAxis ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]} />
+                                    <CartesianGrid strokeDasharray="5 5" />
+                                    <Tooltip />
+                                    
+                                    <Bar dataKey="attendance" fill="#8884d8"  />
+                                </BarChart>
+                                <p style={{ fontSize: 12, textAlign: "center" }}>Attendence percentage vs Classroom</p>
+                            </div>
+                        </Card>
+
                         <Divider><Title level={2}>Employee Statistics</Title></Divider>
                         
                         {pieChartData.length !== 0 && <PieChart
@@ -149,6 +173,7 @@ export default function Dashboard() {
                             width={400}
                             height={200}
                         />}
+
 
                     </Col>
                 </Row>
