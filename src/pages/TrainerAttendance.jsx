@@ -44,6 +44,7 @@ function TrainerAttendance() {
   const onPanelChange = async (value) => {
     console.log("Here")
     setSelectedDate(value.format('YYYY-MM-DD'))
+    setData([])
     await loadMoreData();
     console.log(value.format('YYYY-MM-DD'));
   };
