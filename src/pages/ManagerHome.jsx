@@ -1,83 +1,73 @@
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { Card, Col, Row, Statistic, Divider } from 'antd';
-import '../styles/ManagerHome.css';
-import { useSpring, animated } from "react-spring";
-import { Bar } from 'react-chartjs-2';
-import TickPlacementBars from '../charts/BarChart';
+import { useEffect, useState } from 'react';
+import { Card, Divider, Segmented } from 'antd';
+import Timeline from '../pages/Timeline';
 import CardFlip from '../pages/CardFlip';
+import { SendApiRequest } from '../framework/api';
 
-import{
-    Chart as ChartJS,
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Tooltip,
-    Legend
-} from 'chart.js';
+export default function Dashboard() {
+    const [classroomsData, setClassroomData] = useState([]);
+    const [timelineData, setTimelineData] = useState([]);
+    const [selectedClassroom,setSelectedClassroom] = useState();
 
-ChartJS.register(
-    BarElement,
-    CategoryScale,
-    LinearScale,
-    Tooltip,
-    Legend
-);
+    // Fetch classroom data on component mount
+    useEffect(() => {
+        async function managerDashboardData() {
+            const data = await SendApiRequest({
+                endpoint: "classroom/get_manager_dashboard_details",
+                authenticated: true,
+            });
+            setClassroomData(data['classes']); // Update classrooms data after fetch
+        }
+        managerDashboardData();
+    }, []);
 
-function BarchartComponent(){
-    return (
-        <div>
-            <Bar></Bar>
-        </div>
-    )
-}
+    // Generate timeline data whenever classroomsData is updated
+    useEffect(() => {
+        if (selectedClassroom && classroomsData.length > 0) {
+            
+            if (selectedClassroom) {
+                const newTimelineData = [
+                    {
+                        heading: selectedClassroom.start_date,
+                        subheading: '',
+                        direction: 'left'
+                    },
+                    {
+                        heading: selectedClassroom.eod,
+                        subheading: '',
+                        direction: 'right'
+                    }
+                ];
+                setTimelineData(newTimelineData);
+            }
+        }
+    }, [selectedClassroom]);
 
-
-function Number({ n }){
-    const { number } = useSpring({
-        from: { number: 0},
-        number: n,
-        delay: 200,
-        config: {mass: 1,tension: 20,friction: 20},
-    });
-    return <animated.div className='animatedNumber'>{number.to((n)=>n.toFixed(0))}</animated.div>;
-}
-export default function () {
-    
     return (
         <>
-        <h1 className='dashboardHeader'>Dashboard</h1>
-        <Divider className='dashboardDivider'>
-        
-        </Divider>
-            {/* <Row gutter={16} className='toprow'>
-                <Col span={8}>
-                    <Card bordered={false} className='topcards'>
-                    <Divider><h1>Classrooms</h1></Divider>
-                        <Number className='animatedNumber' n={10} />
-                    </Card>
-                </Col>
-                <Col span={8} >
-                    <Card bordered={false} className='topcards'>
-                        <Divider><h1>Trainer</h1></Divider>
-                    <Number className='animatedNumber' n={5} />
-                    </Card>
-                </Col>
-                <Col span={8} >
-                    <Card bordered={false} className='topcards'>
-                        <Divider><h1>Employees</h1></Divider>
-                        <Number className='animatedNumber' n={100} />
-                       
-                    
-                    
-                    </Card>
-                </Col>
-            </Row> */}
-       
-       <CardFlip></CardFlip>
-        <Divider></Divider>
-        <TickPlacementBars></TickPlacementBars>
-        
+            <h1 className='dashboardHeader'>Dashboard</h1>
+            <Divider className='dashboardDivider' />
+            
+            <CardFlip />
+            <Divider />
+            <h1>Course Timelines</h1>
+            <Card >
+                <Segmented
+                    options={classroomsData.map((classroom) => classroom.title)}
+                    onChange={(value) => {
+                        const classroom = classroomsData.find((cls) => cls.title === value);
+                        // Handle classroom selection if needed
+                        setSelectedClassroom(classroom);
+                        console.log("Selected classroom is",selectedClassroom)
+                    }}
+                />
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',width:'50vw',backgroundColor:'aliceblue'}}>
+                    <Timeline eventData={timelineData} />
+                </div>
+                <div>
+                    HELLO
+                </div>
+            </Card>
         </>
-
-    )
+    );
 }
