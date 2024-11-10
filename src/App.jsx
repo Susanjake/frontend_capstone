@@ -25,7 +25,7 @@ const { Content } = Layout;
 import { ToastContainer, toast } from 'react-toastify';
 
 Object.defineProperty(String.prototype, 'capitalize', {
-  value: function() {
+  value: function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
   },
   enumerable: false
@@ -67,7 +67,7 @@ const App = () => {
           // Seed Token
           colorPrimary: '',
           borderRadius: 2,
-          fontSize:16,
+          fontSize: 16,
           //itemBg: "#00FFFF",
 
           // Alias Token
@@ -83,30 +83,33 @@ const App = () => {
             triggerBg: colorBgContainer,
             triggerColor: "blue",
           },
-          Card:{
-            borderRadius:"8px",
-            borderRadiusLG:"20px"
+          Card: {
+            borderRadius: "8px",
+            borderRadiusLG: "20px"
           }
         },
-        algorithm:theme.compactAlgorithm
+        algorithm: theme.compactAlgorithm
       }}
     >
       {/* <HeaderStudent /> */}
-      <ToastContainer/>
+      <ToastContainer />
       {/* <Layout> */}
-        {/* <Header title="Samarthya" /> */}
-        <Layout style={{
-          backgroundSize: "cover",
-          backgroundRepeat: "repeat",
-          height:"auto",
-          minHeight:"100vh"
-        }}>
-          <SideBar />
-          <Content >
-            {PageMap[currentPage]}
-          </Content>
-          <Footer/>
-        </Layout>
+      {/* <Header title="Samarthya" /> */}
+      <Layout style={{
+        backgroundSize: "cover",
+        backgroundRepeat: "repeat",
+        height: "auto",
+        minHeight: "100vh"
+      }}>
+        <SideBar />
+        <Content width="75%"
+          style={{
+            marginLeft: '25%'
+          }} >
+          {PageMap[currentPage]}
+        </Content>
+        <Footer />
+      </Layout>
       {/* </Layout > */}
     </ConfigProvider>
   );

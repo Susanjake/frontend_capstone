@@ -57,53 +57,55 @@ export default function () {
         switch (userInfo.role) {
             case 'admin':
                 // Add sidebar items for admin here
-                items.push(getItem('Home', 'admin_home',<HomeIcon/>));
+                items.push(getItem('Home', 'admin_home', <HomeIcon />));
                 break;
             case 'manager':
                 // Add side bar items for manager here
-                items.push(getItem('Home', 'manager_home',<HomeIcon/>));
-                items.push(getItem('Create Classroom', 'create_classroom',<CreateNewFolderIcon/>));
-                items.push(getItem('Manage Classroom','manage_classroom',<ManageAccountsIcon/>));
-                items.push(getItem('Manage Employees','manage_employees',<GroupsIcon/>));
-                items.push(getItem('Manage Trainers','manage_trainers',<CastForEducationIcon/>));
+                items.push(getItem('Home', 'manager_home', <HomeIcon />));
+                items.push(getItem('Create Classroom', 'create_classroom', <CreateNewFolderIcon />));
+                items.push(getItem('Manage Classroom', 'manage_classroom', <ManageAccountsIcon />));
+                items.push(getItem('Manage Employees', 'manage_employees', <GroupsIcon />));
+                items.push(getItem('Manage Trainers', 'manage_trainers', <CastForEducationIcon />));
 
                 break;
             case 'trainer':
-                items.push(getItem('Home','trainer_home',<HomeIcon/>));
-                items.push(getItem('Students','trainer_student',<PeopleAltIcon/>));
+                items.push(getItem('Home', 'trainer_home', <HomeIcon />));
+                items.push(getItem('Students', 'trainer_student', <PeopleAltIcon />));
                 // items.push(getItem('Assignments',''));
-                items.push(getItem('Schedule Meeting','trainer_schedule',<ScheduleIcon/>));
-                items.push(getItem('Attendance','trainer_attendance',<PlaylistAddCheckIcon/>));
-                items.push(getItem('Meetings','attend_meeting',<MeetingRoomIcon/>))
+                items.push(getItem('Schedule Meeting', 'trainer_schedule', <ScheduleIcon />));
+                items.push(getItem('Attendance', 'trainer_attendance', <PlaylistAddCheckIcon />));
+                items.push(getItem('Meetings', 'attend_meeting', <MeetingRoomIcon />))
                 break;
 
 
             default:
                 // Add side bar items for student user here
-                items.push(getItem('Home', 'student_home',<HomeIcon/>));
-                items.push(getItem('Meetings','attend_meeting',<MeetingRoomIcon/>))
+                items.push(getItem('Home', 'student_home', <HomeIcon />));
+                items.push(getItem('Meetings', 'attend_meeting', <MeetingRoomIcon />))
         }
         // Common for authenticated user
-        items.push(getItem('SignOut', 'sign_out',<ExitToAppIcon/>));
+        items.push(getItem('SignOut', 'sign_out', <ExitToAppIcon />));
 
     } else {
         // Side bar item for non logged in user
-        items.push(getItem('Home', 'guest_home',<HomeIcon/>));
-        items.push(getItem('Login', 'login',<LoginIcon/>));
-        items.push(getItem('Register', 'register',<HowToRegIcon/>));
+        items.push(getItem('Home', 'guest_home', <HomeIcon />));
+        items.push(getItem('Login', 'login', <LoginIcon />));
+        items.push(getItem('Register', 'register', <HowToRegIcon />));
     }
 
     const [collapsed, setCollapsed] = useState(false);
     const currentPage = useSelector((state) => state.currentPage);
 
     return (
-        <Sider 
-            collapsible 
-            collapsed={collapsed} 
+        <Sider
+            collapsible
+            collapsed={collapsed}
             onCollapse={(value) => setCollapsed(value)}
             style={{
-                background:"white",
-            }}    
+                background: "white",
+                position:"fixed",
+                height:"100vh"
+            }}
         >
             <div className="demo-logo-vertical" />
             <Menu
@@ -112,8 +114,8 @@ export default function () {
                 selectedKeys={[currentPage]}
                 onClick={OnUserClickSideBarItem}
                 style={{
-                   backgroundColor:"transparent",
-                   backdropFilter:"blur(5px)",
+                    backgroundColor: "transparent",
+                    backdropFilter: "blur(5px)",
                 }}
             />
         </Sider>
