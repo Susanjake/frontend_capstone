@@ -10,6 +10,7 @@ export default function Dashboard() {
     const [timelineData, setTimelineData] = useState([]);
     const [selectedClassroom, setSelectedClassroom] = useState();
     const [statistics, setStatistics] = useState({});
+    const [attendenceaBardata,setattendenceBarData] = useState('');
 
     const data = [
         { name: "Page A", uv: 4000 },
@@ -20,6 +21,17 @@ export default function Dashboard() {
         { name: "Page F", uv: 2390 },
         { name: "Page G", uv: 3490 },
     ];
+    function bargraphGenerator(attendenceBardata){
+
+        // average_attendance
+        // title
+        return attendenceBardata.map((item)=>{
+            return {
+                x:item.title,
+                y:item.average_attendance,
+            }
+        })
+    }
 
     // Fetch classroom data on component mount
     useEffect(() => {
@@ -30,7 +42,9 @@ export default function Dashboard() {
             });
             setStatistics(data);
             setClassroomData(data['classes']);
-            setSelectedClassroom(data['classes'][0])
+            setSelectedClassroom(data['classes'][0]);
+            
+            setattendenceBarData(bargraphGenerator(data['classes']));
         }
         managerDashboardData();
     }, []);
@@ -105,15 +119,17 @@ export default function Dashboard() {
                             <BarChart
                                 width={500}
                                 height={400}
-                                data={data}
+                                data={attendenceaBardata}
                                 barSize={40}
                                 margin={{ right: 4 }}
                             >
-                                <XAxis />
+                                <XAxis dataKey={"x"} 
+                                    tick={{fontSize:10}}
+                                />
                                 <YAxis />
                                 <CartesianGrid strokeDasharray="5 5" />
                                 <Tooltip />
-                                <Bar dataKey="uv" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
+                                <Bar dataKey="y" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
                             </BarChart>
                         </div>
                     </Col>
