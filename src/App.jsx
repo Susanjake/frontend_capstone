@@ -87,7 +87,7 @@ const App = () => {
       >
         <SideBar />
         <Layout style={{
-          backgroundImage: "url('assets/background.png')",
+          // backgroundImage: "url('assets/background.png')",
           backgroundSize:"cover",
           backgroundRepeat:"repeat",
           //backgroundPosition:"center center"
