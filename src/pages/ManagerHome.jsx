@@ -82,7 +82,7 @@ export default function Dashboard() {
     }, [selectedClassroom]);
 
     return (
-        <Layout>
+        <Layout style={{paddingLeft:'80px'}}>
             <Title>Dashboard</Title>
             <Divider className='dashboardDivider' />
             <Layout style={{ height: "25%" }}>
@@ -155,9 +155,9 @@ export default function Dashboard() {
                                     <CartesianGrid strokeDasharray="5 5" />
                                     <Tooltip />
                                     
-                                    <Bar dataKey="attendance" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
+                                    <Bar dataKey="attendance" fill="#8884d8"  />
                                 </BarChart>
-                                <p style={{ fontSize: 12, textAlign: "center" }}>Attendance Percentage</p>
+                                <p style={{ fontSize: 12, textAlign: "center" }}>Attendence percentage vs Classroom</p>
                             </div>
                         </Card>
                     </Col>

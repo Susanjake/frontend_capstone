@@ -17,3 +17,10 @@
 .flip-card-back{
     transform: rotateY(180deg);
 }
+
+.animatedNumber {
+    text-align: center;
+    font-size: 4rem; /* Adjust this value to make the number larger */
+    font-weight: 400; /* Optional: Makes the number bold */
+    color: #d9f9f4; /* Optional: Adjust color as needed */
+  }

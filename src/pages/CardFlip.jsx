@@ -11,10 +11,15 @@ function Number({ n }) {
   const { number } = useSpring({
     from: { number: 0 },
     number: n,
-    delay: 200,
-    config: { mass: 1, tension: 20, friction: 20 },
+    delay: 50,
+    config: { mass: 1, tension: 20, friction: 10 },
   });
-  return <animated.div className='animatedNumber'>{number.to((n) => n.toFixed(0))}</animated.div>;
+  return (
+  <animated.div className='animatedNumber' >
+    {number.to((n) => n.toFixed(0))}
+    </animated.div>
+    
+  )
 }
 function viewEmployeeDetailsButton() {
   pass
@@ -35,7 +40,7 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
 
   return (
     <>
-      <div className="flip-card w-[150px] h-[150px] rounded-md" onClick={handleFlip}>
+      <div className="flip-card w-[300px] h-[160px] rounded-md" onClick={handleFlip}>
         <motion.div
           className="flip-card-inner w-[100%] h-[100%]"
           initial={false}
@@ -44,10 +49,12 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
           transition={{ duration: 0.6, animationDirection: 'normal' }}
           onAnimationComplete={() => setIsAnimating(false)}
         >
-          <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4 bg-gradient-to-r from-transparent to-cyan-700 ">
+          <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4 bg-gradient-to-r from-blue-400 to-cyan-700 ">
 
-            <Divider className='text-white'><h1>{dividerTitle}</h1></Divider>
-            <Number className='bg-slate-400' n={numberDetail} />
+            <Divider style={{color:'white'}}><h1 className='text-white'>{dividerTitle}</h1></Divider>
+            
+            <Number n={numberDetail} />
+            
 
           </div>
           <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] rounded-lg p-4 bg-slate-200">
