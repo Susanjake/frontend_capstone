@@ -3,8 +3,8 @@ import { Card, Divider, Segmented, Progress, Popover, Layout, Row, Col, Typograp
 import Timeline from '../pages/Timeline';
 import CardFlip from '../pages/CardFlip';
 import { SendApiRequest } from '../framework/api';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
-import PieChart from '../components/PieChart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, ChartContainer, } from "@mui/x-charts";
 const { Title } = Typography;
 
 export default function Dashboard() {
@@ -12,7 +12,7 @@ export default function Dashboard() {
     const [timelineData, setTimelineData] = useState([]);
     const [selectedClassroom, setSelectedClassroom] = useState();
     const [statistics, setStatistics] = useState({});
-    const [attendenceaBardata, setattendenceBarData] = useState([]);
+    const [attendanceBardata, setattendenceBarData] = useState([]);
     const [pieChartData, setPieChartData] = useState([]);
 
     const data = [
@@ -46,16 +46,20 @@ export default function Dashboard() {
             setStatistics(data);
             setClassroomData(data['classes']);
             setSelectedClassroom(data['classes'][0]);
-            setPieChartData([
-                {
-                    name: "Employees Under Training",
-                    value: data.employees_under_training
-                },
-                {
-                    name: "Employees Not Under Training",
-                    value: data.employees_not_under_training
-                }
-
+            setPieChartData([{
+                data: [
+                    {
+                        id: 0,
+                        label: "Training",
+                        value: data.employees_under_training
+                    },
+                    {
+                        id: 1,
+                        label: " Not Training",
+                        value: data.employees_not_under_training
+                    }
+                ]
+            }
             ])
             setattendenceBarData(bargraphGenerator(data['classes']));
         }
@@ -92,10 +96,10 @@ export default function Dashboard() {
             {/* <h1>Course Timelines</h1> */}
 
             <Layout style={{ margin: "0 16px" }}>
-                <Row gutter={16}>
+                <Row gutter={30}>
 
                     {/* Timeline and Progress chart */}
-                    <Col span={12}>
+                    <Col span={16}>
                         <Card bordered style={{ width: "100%", borderColor: "black" }}>
                             <div style={{
                                 overflow: "auto",
@@ -117,10 +121,10 @@ export default function Dashboard() {
                                 />
                             </div>
                             <Row>
-                                <Col span={18}>
+                                <Col span={20}>
                                     <Timeline eventData={timelineData} />
                                 </Col>
-                                <Col span={6}>
+                                <Col span={4}>
                                     <Popover content={<p>Completion percentage with respect to the deadline</p>} title="Completion percentage">
                                         <Progress
                                             type="dashboard"
@@ -136,8 +140,9 @@ export default function Dashboard() {
                         </Card>
                     </Col>
                     {/* Bar Chart */}
-                    <Col span={12}>
+                    <Col span={8}>
                         
+
                         <Card style={{ width: "100%", borderColor: "black",height:"100%" }} bordered>
                             <div className='BarchartDiv' style={{ flex: '1', backgroundColor: 'white' }}>
                                 <BarChart
@@ -160,10 +165,40 @@ export default function Dashboard() {
                                 <p style={{ fontSize: 12, textAlign: "center" }}>Attendence percentage vs Classroom</p>
                             </div>
                         </Card>
+
+                        <Divider><Title level={2}>Employee Statistics</Title></Divider>
+                        
+                        {pieChartData.length !== 0 && <PieChart
+                            series={pieChartData}
+                            width={400}
+                            height={200}
+                        />}
+
+
                     </Col>
                 </Row>
                 <Row>
-                <PieChart data={pieChartData} />
+                    <Divider />
+                    <Card style={{ width: "100%", borderColor: "black", height: "100%", }} bordered>
+                        <ResponsiveContainer width="100%" height={300}>
+                            <BarChart
+                                data={attendanceBardata}
+                                barSize={40}
+                                margin={{ right: 4 }}
+                            >
+
+                                <XAxis dataKey={"x"}
+                                    tick={false}
+                                />
+                                <YAxis ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]} />
+                                <CartesianGrid strokeDasharray="5 5" />
+                                <Tooltip />
+
+                                <Bar dataKey="attendance" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
+                            </BarChart>
+                            <p style={{ fontSize: 12, textAlign: "center" }}>Attendance Percentage</p>
+                        </ResponsiveContainer>
+                    </Card>
                 </Row>
             </Layout>
         </Layout>
