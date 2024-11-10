@@ -13,7 +13,8 @@ function StudentCards({ data }) {
           <Card title="Classroom" bordered={true} style={{
             minHeight: "100%",
             textAlign: "center",
-            paddingTop: "10px"
+            paddingTop: "10px",
+            background:"linear-gradient(to right, #ee9ca7, #ffdde1)"
           }}>
             <p style={{ fontSize: 35 }}>
               {data.classroom?.title}
@@ -21,23 +22,23 @@ function StudentCards({ data }) {
           </Card>
         </Col>
         <Col span={4}>
-          <Card title="Attendance" bordered={true} style={{ minHeight: "100%", textAlign: "center" }}  >
+          <Card title="Attendance" bordered={true} style={{ minHeight: "100%", textAlign: "center",background:"linear-gradient(to right, #2193b0, #6dd5ed)" }}  >
             <div>
               <Progress type="circle" size={70} percent={parseInt(data.attendance)} steps={5} style={{ minHeight: "100%" }} />
             </div>
           </Card>
         </Col>
         <Col span={4}>
-          <Card title="Trainer" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
+          <Card title="Trainer" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900,background:"linear-gradient(to right, #c6ffdd, #fbd786, #f7797d)" }}>
             <div>
-              {data.trainer}
+              {data.trainer.capitalize()}
             </div>
           </Card>
         </Col>
         <Col span={4}>
-          <Card title="Manager" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
+          <Card title="Manager" bordered={true} style={{ background:"linear-gradient(to right, #1f4037, #99f2c8)", minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
             <div>
-              {data.manager}
+              {data.manager.capitalize()}
             </div>
           </Card>
         </Col>

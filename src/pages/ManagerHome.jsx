@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Card, Divider, Segmented, Progress, Popover, Layout, Row, Col } from 'antd';
+import { Card, Divider, Segmented, Progress, Popover, Layout, Row, Col, Typography, Table } from 'antd';
 import Timeline from '../pages/Timeline';
 import CardFlip from '../pages/CardFlip';
 import { SendApiRequest } from '../framework/api';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
+import PieChart from '../components/PieChart';
+const { Title } = Typography;
 
 export default function Dashboard() {
     const [classroomsData, setClassroomData] = useState([]);
     const [timelineData, setTimelineData] = useState([]);
     const [selectedClassroom, setSelectedClassroom] = useState();
     const [statistics, setStatistics] = useState({});
-    const [attendenceaBardata,setattendenceBarData] = useState('');
+    const [attendenceaBardata, setattendenceBarData] = useState([]);
+    const [pieChartData, setPieChartData] = useState([]);
 
     const data = [
         { name: "Page A", uv: 4000 },
@@ -21,14 +24,14 @@ export default function Dashboard() {
         { name: "Page F", uv: 2390 },
         { name: "Page G", uv: 3490 },
     ];
-    function bargraphGenerator(attendenceBardata){
+    function bargraphGenerator(attendenceBardata) {
 
         // average_attendance
         // title
-        return attendenceBardata.map((item)=>{
+        return attendenceBardata.map((item) => {
             return {
-                x:item.title,
-                y:item.average_attendance,
+                x: item.title,
+                attendance: item.average_attendance,
             }
         })
     }
@@ -43,7 +46,17 @@ export default function Dashboard() {
             setStatistics(data);
             setClassroomData(data['classes']);
             setSelectedClassroom(data['classes'][0]);
-            
+            setPieChartData([
+                {
+                    name: "Employees Under Training",
+                    value: data.employees_under_training
+                },
+                {
+                    name: "Employees Not Under Training",
+                    value: data.employees_not_under_training
+                }
+
+            ])
             setattendenceBarData(bargraphGenerator(data['classes']));
         }
         managerDashboardData();
@@ -69,29 +82,40 @@ export default function Dashboard() {
     }, [selectedClassroom]);
 
     return (
-        <>
-            <h1 className='dashboardHeader'>Dashboard</h1>
+        <Layout>
+            <Title>Dashboard</Title>
             <Divider className='dashboardDivider' />
-
-            <CardFlip statistics={statistics} />
+            <Layout style={{ height: "25%" }}>
+                <CardFlip statistics={statistics} />
+            </Layout>
             <Divider />
             {/* <h1>Course Timelines</h1> */}
-            <Layout>
-                <Row>
+
+            <Layout style={{ margin: "0 16px" }}>
+                <Row gutter={16}>
 
                     {/* Timeline and Progress chart */}
                     <Col span={12}>
-                        <div>
-                            <Segmented
-                                //an array of titles
-                                options={classroomsData.map((classroom) => classroom.title)}
-                                onChange={(value) => {
-                                    const classroom = classroomsData.find((cls) => cls.title === value);
-                                    setSelectedClassroom(classroom);
-                                }}
-                                value={selectedClassroom?.title}
-                        
-                            />
+                        <Card bordered style={{ width: "100%", borderColor: "black" }}>
+                            <div style={{
+                                overflow: "auto",
+                                scrollbarColor: "rgb(255,255,255,0.2) transparent",
+                            }}>
+                                <Segmented
+                                    //an array of titles
+                                    options={classroomsData.map((classroom) => classroom.title)}
+                                    onChange={(value) => {
+                                        const classroom = classroomsData.find((cls) => cls.title === value);
+                                        setSelectedClassroom(classroom);
+                                    }}
+                                    value={selectedClassroom?.title}
+                                    style={{
+                                        backgroundColor: "rgb(0,0,0,0.5)",
+                                        color: "white"
+                                    }}
+
+                                />
+                            </div>
                             <Row>
                                 <Col span={18}>
                                     <Timeline eventData={timelineData} />
@@ -105,36 +129,43 @@ export default function Dashboard() {
                                             trailColor="rgba(234, 85, 85, 0.8)"
                                             strokeWidth={20}
                                             size="small"
-
                                         />
                                     </Popover>
                                 </Col>
-
                             </Row>
-                        </div>
+                        </Card>
                     </Col>
                     {/* Bar Chart */}
                     <Col span={12}>
-                        <div className='BarchartDiv' style={{ flex: '1', backgroundColor: '' }}>
-                            <BarChart
-                                width={500}
-                                height={400}
-                                data={attendenceaBardata}
-                                barSize={40}
-                                margin={{ right: 4 }}
-                            >
-                                <XAxis dataKey={"x"} 
-                                    tick={{fontSize:10}}
-                                />
-                                <YAxis />
-                                <CartesianGrid strokeDasharray="5 5" />
-                                <Tooltip />
-                                <Bar dataKey="y" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
-                            </BarChart>
-                        </div>
+                        
+                        <Card style={{ width: "100%", borderColor: "black",height:"100%" }} bordered>
+                            <div className='BarchartDiv' style={{ flex: '1', backgroundColor: 'white' }}>
+                                <BarChart
+                                    width={550}
+                                    height={300}
+                                    data={attendenceaBardata}
+                                    barSize={40}
+                                    margin={{ right: 4 }}
+                                >
+                                    
+                                    <XAxis dataKey={"x"}
+                                        tick={false}
+                                    />
+                                    <YAxis ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]} />
+                                    <CartesianGrid strokeDasharray="5 5" />
+                                    <Tooltip />
+                                    
+                                    <Bar dataKey="attendance" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
+                                </BarChart>
+                                <p style={{ fontSize: 12, textAlign: "center" }}>Attendance Percentage</p>
+                            </div>
+                        </Card>
                     </Col>
                 </Row>
+                <Row>
+                <PieChart data={pieChartData} />
+                </Row>
             </Layout>
-        </>
+        </Layout>
     );
 }

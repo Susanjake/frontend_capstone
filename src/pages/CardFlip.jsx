@@ -35,7 +35,7 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
 
   return (
     <>
-      <div className="flip-card w-[270px] h-[250px] rounded-md" onClick={handleFlip}>
+      <div className="flip-card w-[150px] h-[150px] rounded-md" onClick={handleFlip}>
         <motion.div
           className="flip-card-inner w-[100%] h-[100%]"
           initial={false}

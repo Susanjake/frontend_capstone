@@ -41,16 +41,18 @@ export default function (props) {
                                 ) : null}
                             </div>
                         ))}
-                        <Divider />
+                        <Divider >
                         <Form.Item>
+
                             <Button
                                 type="dashed"
                                 onClick={() => add()}
-                                style={{ width: "60%" }}
+                                style={{ width: "130%" }}
                             >
                                 <PlusOutlined /> Add Module
                             </Button>
                         </Form.Item>
+                        </Divider>
                     </div>
                 );
             }}

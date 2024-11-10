@@ -1,4 +1,4 @@
-import { Form, Typography, Input, Select, Row, Steps, Button, Flex, Upload, DatePicker, Card } from 'antd';
+import { Form, Typography, Input, Select, Row, Steps, Button, Flex, Upload, DatePicker, Card, Divider } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -185,11 +185,15 @@ export default function () {
         <Content style={{
             margin: '0 16px',
         }}>
-            <Title>Create Classroom</Title>
+            <Divider>
+                <Title>
+                    Create Classroom
+                </Title>
+            </Divider>
 
             <Steps current={current} items={steps} />
             <Content style={{
-                margin:"20px"
+                margin: "20px"
             }}>
                 <Card style={{
                     backdropFilter: "blur(5px)",
@@ -197,15 +201,15 @@ export default function () {
                 }}>
 
                     <Form onChange={OnFormUpdate} onFinish={OnFormUpdate} form={form}
-                    labelCol={{
-                        span: 8,
-                      }}
-                      wrapperCol={{
-                        span: 16,
-                      }}
-                      style={{
-                        maxWidth: "100%",
-                      }}
+                        labelCol={{
+                            span: 8,
+                        }}
+                        wrapperCol={{
+                            span: 16,
+                        }}
+                        style={{
+                            maxWidth: "100%",
+                        }}
                     >
                         {GenerateStepContent()}
                         <Flex>
