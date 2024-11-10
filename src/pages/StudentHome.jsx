@@ -31,14 +31,14 @@ function StudentCards({ data }) {
         <Col span={4}>
           <Card title="Trainer" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900,background:"linear-gradient(to right, #c6ffdd, #fbd786, #f7797d)" }}>
             <div>
-              {data.trainer.capitalize()}
+              {data.trainer?.capitalize()}
             </div>
           </Card>
         </Col>
         <Col span={4}>
           <Card title="Manager" bordered={true} style={{ background:"linear-gradient(to right, #1f4037, #99f2c8)", minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
             <div>
-              {data.manager.capitalize()}
+              {data.manager?.capitalize()}
             </div>
           </Card>
         </Col>
@@ -124,7 +124,7 @@ function StudentHome() {
     <Layout style={{ margin: "0 16px" }}>
       <Layout style={{ height: "40vh" }}>
         <Title level={4}>
-          Hey {data?.user?.username}
+          Hey {data?.user?.username.capitalize()}
         </Title>
         <Content>
           <StudentCards data={data} />

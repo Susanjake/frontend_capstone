@@ -2,7 +2,19 @@ import Sider from "antd/es/layout/Sider";
 import { Menu } from 'antd';
 import { useState } from "react";
 import { setAuthenticated, setPage } from "../app/actions";
-
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import HomeIcon from '@mui/icons-material/Home';
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import BadgeIcon from '@mui/icons-material/Badge';
+import GroupsIcon from '@mui/icons-material/Groups';
+import CastForEducationIcon from '@mui/icons-material/CastForEducation';
+import LoginIcon from '@mui/icons-material/Login';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import {
     DesktopOutlined,
     FileOutlined,
@@ -45,40 +57,40 @@ export default function () {
         switch (userInfo.role) {
             case 'admin':
                 // Add sidebar items for admin here
-                items.push(getItem('Home', 'admin_home'));
+                items.push(getItem('Home', 'admin_home',<HomeIcon/>));
                 break;
             case 'manager':
                 // Add side bar items for manager here
-                items.push(getItem('Home', 'manager_home'));
-                items.push(getItem('Create Classroom', 'create_classroom'));
-                items.push(getItem('Manage Classroom','manage_classroom'));
-                items.push(getItem('Manage Employees','manage_employees'));
-                items.push(getItem('Manage Trainers','manage_trainers'));
+                items.push(getItem('Home', 'manager_home',<HomeIcon/>));
+                items.push(getItem('Create Classroom', 'create_classroom',<CreateNewFolderIcon/>));
+                items.push(getItem('Manage Classroom','manage_classroom',<ManageAccountsIcon/>));
+                items.push(getItem('Manage Employees','manage_employees',<GroupsIcon/>));
+                items.push(getItem('Manage Trainers','manage_trainers',<CastForEducationIcon/>));
 
                 break;
             case 'trainer':
-                items.push(getItem('Home','trainer_home'));
-                items.push(getItem('Students','trainer_student'));
+                items.push(getItem('Home','trainer_home',<HomeIcon/>));
+                items.push(getItem('Students','trainer_student',<PeopleAltIcon/>));
                 // items.push(getItem('Assignments',''));
-                items.push(getItem('Schedule Meeting','trainer_schedule'));
-                items.push(getItem('Attendance','trainer_attendance'));
-                items.push(getItem('Meetings','attend_meeting'))
+                items.push(getItem('Schedule Meeting','trainer_schedule',<ScheduleIcon/>));
+                items.push(getItem('Attendance','trainer_attendance',<PlaylistAddCheckIcon/>));
+                items.push(getItem('Meetings','attend_meeting',<MeetingRoomIcon/>))
                 break;
 
 
             default:
                 // Add side bar items for student user here
-                items.push(getItem('Home', 'student_home'));
-                items.push(getItem('Meetings','attend_meeting'))
+                items.push(getItem('Home', 'student_home',<HomeIcon/>));
+                items.push(getItem('Meetings','attend_meeting',<MeetingRoomIcon/>))
         }
         // Common for authenticated user
-        items.push(getItem('SignOut', 'sign_out'));
+        items.push(getItem('SignOut', 'sign_out',<ExitToAppIcon/>));
 
     } else {
         // Side bar item for non logged in user
-        items.push(getItem('Home', 'guest_home'));
-        items.push(getItem('Login', 'login'));
-        items.push(getItem('Register', 'register'));
+        items.push(getItem('Home', 'guest_home',<HomeIcon/>));
+        items.push(getItem('Login', 'login',<LoginIcon/>));
+        items.push(getItem('Register', 'register',<HowToRegIcon/>));
     }
 
     const [collapsed, setCollapsed] = useState(false);
