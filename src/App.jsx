@@ -20,6 +20,7 @@ import ManageEmployees from './pages/ManageEmployees';
 import ManageTrainers from './pages/ManageTrainers';
 import GuestHome from './pages/GuestHome';
 import { colorBgContainer } from './app/theme';
+import { Header } from 'antd/es/layout/layout';
 const { Content } = Layout;
 
 
@@ -38,9 +39,9 @@ const App = () => {
     'trainer_attendance': <TrainerAttendance />,
     'manager_home': <ManagerHome />,
     'attend_meeting': <StudentAttendMeeting />,
-    'manage_classroom':<ManageClassroom />,
-    'manage_employees':<ManageEmployees/>,
-    'manage_trainers': <ManageTrainers/>
+    'manage_classroom': <ManageClassroom />,
+    'manage_employees': <ManageEmployees />,
+    'manage_trainers': <ManageTrainers />
   }
   const currentPage = useSelector((state) => state.currentPage);
   const dispatch = useDispatch();
@@ -68,7 +69,7 @@ const App = () => {
           Menu: {
             itemBg: colorBgContainer,
             itemActiveBg: colorBgContainer,
-            itemSelectedBg: colorBgContainer
+            itemSelectedBg: "grey"
           },
           Layout: {
             itemBg: "#FFFFFF",
@@ -80,24 +81,19 @@ const App = () => {
     >
       {/* <HeaderStudent /> */}
 
-      <Layout
-        style={{
-          height: "100vh" //91.3 if header is used
-        }}
-      >
-        <SideBar />
+      {/* <Layout> */}
+        {/* <Header title="Samarthya" /> */}
         <Layout style={{
-          // backgroundImage: "url('assets/background.png')",
-          backgroundSize:"cover",
-          backgroundRepeat:"repeat",
-          //backgroundPosition:"center center"
-          // backgroundColor:"#AFC1D6"
+          backgroundSize: "cover",
+          backgroundRepeat: "repeat",
+          height:"89vh"
         }}>
+          <SideBar />
           <Content >
             {PageMap[currentPage]}
           </Content>
         </Layout>
-      </Layout >
+      {/* </Layout > */}
     </ConfigProvider>
   );
 };
