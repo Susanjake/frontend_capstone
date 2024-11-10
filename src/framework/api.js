@@ -1,3 +1,5 @@
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const BACKEND_DOMAIN = "http://127.0.0.1:8000";
 
 export async function SendApiRequest({ endpoint, method = "GET", data = {}, authenticated = false, withCredentials = false }) {
@@ -53,11 +55,19 @@ export async function SendApiRequest({ endpoint, method = "GET", data = {}, auth
                 throw err;
             }
         } else if (response.status == 401) {
+            console.log(response)
+            let result = await response.json()
+            toast(result.detail)
             throw {}
         }
         let result = await response.json();
+        if(!result.ok) {
+            console.log("error here",result.error)
+            toast(result.error)
+        }
         return result;
     } catch (err) {
+        toast(err)
         throw err
     }
 }

@@ -32,7 +32,7 @@ export default function () {
 
     return (
         <Row type="flex" justify="center" align="middle" style={{ minHeight: "90vh" }}>
-            {errorMsg !== '' ? (<Alert type="error" message={errorMsg} />) : ''}
+            {/* {errorMsg !== '' ? (<Alert type="error" message={errorMsg} />) : ''} */}
             <Card style={{
                 backdropFilter: "blur(5px)",
                 backgroundColor: "rgba(255, 255, 255, .55)"

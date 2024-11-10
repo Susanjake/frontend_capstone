@@ -112,50 +112,50 @@ export default function () {
     return (
         <>
             <h1 style={{ textAlign: "center", fontSize: "20px", fontWeight: 600 }}>Pick a meeting to attend</h1>
-            <Flex align="center" justify="center">
 
-                <Calendar onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1, "day"))}
-                />
-                {/* Input form -- modal */}
-                <Modal
-                    title="Attend Meeting"
-                    open={isModalVisible}
-                    onOk={() => { handleOk(formData[selectedDate]?.meeting_id) }}
-                    onCancel={handleCancel}
-                    okText="Attend Meeting"
 
-                >
-                    {meetingError !== '' ? <Alert type="error" message={meetingError} /> : ''}
-                    <Form layout="vertical">
-                        <Form.Item label="Meeting name">
-                            <Input
-                                name="meeting_name"
-                                value={formData[selectedDate]?.meeting_name || ''}
-                                disabled
-                            />
-                        </Form.Item>
-                        <Form.Item label="Meeting time">
-                            <TimePicker.RangePicker
-                                use12Hours
-                                disabledTime={moment.now}
-                                disabled
-                                value={[
-                                    formData[selectedDate]?.start_time ? dayjs(formData[selectedDate]?.start_time, "HH:mm:ss") : dayjs(),
-                                    formData[selectedDate]?.end_time ? dayjs(formData[selectedDate]?.end_time, "HH:mm:ss") : dayjs()
-                                ]}
-                            />
-                        </Form.Item>
-                        <Form.Item label="Meeting link">
-                            <Input
-                                name="meeting_link"
-                                value={formData[selectedDate]?.meeting_link || ''}
-                                disabled
-                            />
-                        </Form.Item>
+            <Calendar fullscreen={true} onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1, "day"))}
+            />
+            {/* Input form -- modal */}
+            <Modal
+                title="Attend Meeting"
+                open={isModalVisible}
+                onOk={() => { handleOk(formData[selectedDate]?.meeting_id) }}
+                onCancel={handleCancel}
+                okText="Attend Meeting"
 
-                    </Form>
-                </Modal>
-            </Flex>
+            >
+                {meetingError !== '' ? <Alert type="error" message={meetingError} /> : ''}
+                <Form layout="vertical">
+                    <Form.Item label="Meeting name">
+                        <Input
+                            name="meeting_name"
+                            value={formData[selectedDate]?.meeting_name || ''}
+                            disabled
+                        />
+                    </Form.Item>
+                    <Form.Item label="Meeting time">
+                        <TimePicker.RangePicker
+                            use12Hours
+                            disabledTime={moment.now}
+                            disabled
+                            value={[
+                                formData[selectedDate]?.start_time ? dayjs(formData[selectedDate]?.start_time, "HH:mm:ss") : dayjs(),
+                                formData[selectedDate]?.end_time ? dayjs(formData[selectedDate]?.end_time, "HH:mm:ss") : dayjs()
+                            ]}
+                        />
+                    </Form.Item>
+                    <Form.Item label="Meeting link">
+                        <Input
+                            name="meeting_link"
+                            value={formData[selectedDate]?.meeting_link || ''}
+                            disabled
+                        />
+                    </Form.Item>
+
+                </Form>
+            </Modal>
+
         </>
     );
 }
