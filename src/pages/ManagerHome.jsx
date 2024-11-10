@@ -8,7 +8,7 @@ export default function Dashboard() {
     const [classroomsData, setClassroomData] = useState([]);
     const [timelineData, setTimelineData] = useState([]);
     const [selectedClassroom,setSelectedClassroom] = useState();
-
+    const [statistics,setStatistics] = useState({});
     // Fetch classroom data on component mount
     useEffect(() => {
         async function managerDashboardData() {
@@ -16,6 +16,7 @@ export default function Dashboard() {
                 endpoint: "classroom/get_manager_dashboard_details",
                 authenticated: true,
             });
+            setStatistics(data);
             setClassroomData(data['classes']); // Update classrooms data after fetch
         }
         managerDashboardData();
@@ -28,13 +29,13 @@ export default function Dashboard() {
             if (selectedClassroom) {
                 const newTimelineData = [
                     {
-                        heading: selectedClassroom.start_date,
-                        subheading: '',
+                        heading: 'Start Date',
+                        subHeading: selectedClassroom.start_date,
                         direction: 'left'
                     },
                     {
-                        heading: selectedClassroom.eod,
-                        subheading: '',
+                        heading:'End Date' ,
+                        subHeading: selectedClassroom.eod,
                         direction: 'right'
                     }
                 ];
@@ -48,7 +49,7 @@ export default function Dashboard() {
             <h1 className='dashboardHeader'>Dashboard</h1>
             <Divider className='dashboardDivider' />
             
-            <CardFlip />
+            <CardFlip statistics={statistics}/>
             <Divider />
             <h1>Course Timelines</h1>
             <Card >

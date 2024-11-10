@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Card, Col, Row, Calendar } from 'antd';
-const { Content } = Layout;
+const { Content,Header } = Layout;
 import '../styles/StudentCards.css'
 
 
@@ -41,35 +41,31 @@ function UpcomingClasses() {
   };
 
   return (
-    <Layout>
-      <div
-        style={{
-          padding: '50px',
-        }}
-      >
-        <h2>Upcoming Events</h2>
-      </div>
-      <div>
+    <>
+      <>
 
-      </div>
-    </Layout>
+        <div>
+          <h2>Upcoming Events</h2>
+        </div>
+        <div>
+
+        </div>
+      </>
+    </>
   )
 }
 
 
 const StudentHome = () => (
-  <div>
-    <Content
-      style={{
-        margin: '0 16px',
-      }}
-    >
-
+  <Layout>
+    <Header>
       <h1>Overview</h1>
+    </Header>
+    <Content>
       <StudentCards />
+      <UpcomingClasses />
     </Content>
-    <UpcomingClasses />
-  </div>
+  </Layout>
 );
 
 

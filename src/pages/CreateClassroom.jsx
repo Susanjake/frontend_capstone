@@ -1,4 +1,4 @@
-import { Form, Typography, Input, Select, Row, Steps, Button, Flex, Upload, DatePicker } from 'antd';
+import { Form, Typography, Input, Select, Row, Steps, Button, Flex, Upload, DatePicker, Card } from 'antd';
 import { Content } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -36,7 +36,7 @@ export default function () {
         setFormData({ ...formData, start_date: dateString })
         console.log(formData)
     }
-   
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -181,6 +181,7 @@ export default function () {
     }
 
     return (
+
         <Content style={{
             margin: '0 16px',
         }}>
@@ -188,43 +189,58 @@ export default function () {
 
             <Steps current={current} items={steps} />
             <Content style={{
-                margin: '20px'
+                margin:"20px"
             }}>
-                <Form onChange={OnFormUpdate} onFinish={OnFormUpdate} form={form}>
-                    {GenerateStepContent()}
-                    <Flex>
-                        {current > 0 && (
-                            <Form.Item>
-                                <Button
-                                    style={{
-                                        margin: '0 8px',
-                                    }}
-                                    onClick={() => prev()}
-                                >
-                                    Previous
-                                </Button>
-                            </Form.Item>
-                        )}
-                        {current < steps.length - 1 && (
-                            <Form.Item>
+                <Card style={{
+                    backdropFilter: "blur(5px)",
+                    backgroundColor: "rgba(255, 255, 255, .55)"
+                }}>
 
-                                <Button type="primary" htmlType="submit" onClick={() => next()}>
-                                    Next
-                                </Button>
-                            </Form.Item>
-                        )}
+                    <Form onChange={OnFormUpdate} onFinish={OnFormUpdate} form={form}
+                    labelCol={{
+                        span: 8,
+                      }}
+                      wrapperCol={{
+                        span: 16,
+                      }}
+                      style={{
+                        maxWidth: "100%",
+                      }}
+                    >
+                        {GenerateStepContent()}
+                        <Flex>
+                            {current > 0 && (
+                                <Form.Item>
+                                    <Button
+                                        style={{
+                                            margin: '0 8px',
+                                        }}
+                                        onClick={() => prev()}
+                                    >
+                                        Previous
+                                    </Button>
+                                </Form.Item>
+                            )}
+                            {current < steps.length - 1 && (
+                                <Form.Item>
 
-                        {current === steps.length - 1 && (
-                            <Form.Item>
+                                    <Button type="primary" htmlType="submit" onClick={() => next()}>
+                                        Next
+                                    </Button>
+                                </Form.Item>
+                            )}
 
-                                <Button type="primary" htmlType="submit" onClick={OnCreateClassRoom}>
-                                    Done
-                                </Button>
-                            </Form.Item>
-                        )}
-                    </Flex>
-                </Form>
+                            {current === steps.length - 1 && (
+                                <Form.Item>
 
+                                    <Button type="primary" htmlType="submit" onClick={OnCreateClassRoom}>
+                                        Done
+                                    </Button>
+                                </Form.Item>
+                            )}
+                        </Flex>
+                    </Form>
+                </Card>
             </Content>
         </Content>
     )

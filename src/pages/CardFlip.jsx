@@ -68,7 +68,7 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
   );
 }
 
-function CardFlip() {
+function CardFlip({statistics}) {
   const dispatch = useDispatch();
   
   function viewClassRoomButton() {
@@ -78,9 +78,9 @@ function CardFlip() {
   }
   return (
     <div className="flex items-center justify-center space-x-10">
-      <FlipCard numberDetail={10} dividerTitle="Classrooms" buttonText="View Classrooms" onButtonClick={viewClassRoomButton} />
-      <FlipCard numberDetail={100} dividerTitle="Employees" buttonText="View Employees" onButtonClick={viewEmployeeDetailsButton}/>
-      <FlipCard numberDetail={5} dividerTitle="Trainers" buttonText="View Trainers" onButtonClick={viewEmployeeDetailsButton}/>
+      <FlipCard numberDetail={statistics.classroom_count} dividerTitle="Classrooms" buttonText="View Classrooms" onButtonClick={viewClassRoomButton} />
+      <FlipCard numberDetail={statistics.employees_under_manager_count} dividerTitle="Employees" buttonText="View Employees" onButtonClick={viewEmployeeDetailsButton}/>
+      <FlipCard numberDetail={statistics.trainer_count} dividerTitle="Trainers" buttonText="View Trainers" onButtonClick={viewEmployeeDetailsButton}/>
     </div>
   );
 }

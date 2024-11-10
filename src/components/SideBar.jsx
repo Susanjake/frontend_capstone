@@ -90,7 +90,7 @@ export default function () {
             collapsed={collapsed} 
             onCollapse={(value) => setCollapsed(value)}
             style={{
-                background:colorBgContainer,
+                background:"white",
             }}    
         >
             <div className="demo-logo-vertical" />
@@ -101,7 +101,7 @@ export default function () {
                 onClick={OnUserClickSideBarItem}
                 style={{
                    backgroundColor:"transparent",
-                   backdropFilter:"blur(5px)"
+                   backdropFilter:"blur(5px)",
                 }}
             />
         </Sider>
