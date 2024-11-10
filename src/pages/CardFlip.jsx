@@ -57,7 +57,7 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
             
 
           </div>
-          <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] rounded-lg p-4 bg-slate-200">
+          <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] rounded-lg p-4 bg-blue-200">
             <h1 className="text-2xl font-bold  text-yellow-200">Know more</h1>
             <button
               className='text-font-bold justify-center bg-orange-100 rounded-lg w-full h-1/4'
