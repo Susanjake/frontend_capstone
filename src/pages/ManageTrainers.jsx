@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress } from 'antd';
+import { Space, Table, Tag, Divider, Modal, Button, Progress,Typography } from 'antd';
 import { SendApiRequest } from '../framework/api';
+
+const {Title} = Typography;
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +49,7 @@ function App() {
       title: "Allocated Class",
       dataIndex: "classroom",
       key: 'classroom',
-      render: (data, record) => <Button  color="primary" variant="outlined" onClick={() => showModal(record)}>Meetings Detail</Button>,
+      render: (data, record) => <Button color="primary" variant="outlined" onClick={() => showModal(record)}>Meetings Detail</Button>,
     }
   ];
   const data = [
@@ -149,7 +151,9 @@ function App() {
   ];
   return (
     <>
-      <Divider>Classroom Data</Divider>
+      <Divider>
+        <Title>Trainers</Title>
+      </Divider>
       <Table style={{ padding: '50px' }} columns={columns} dataSource={tableData} />
       <Modal width={"50%"} title="Meeting Details" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} >
         <Table

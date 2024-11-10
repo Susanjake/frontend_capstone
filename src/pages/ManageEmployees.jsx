@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover, Flex } from 'antd';
+import { Space, Table, Tag, Divider, Modal, Button, Progress, Popover, Flex,Typography, Layout } from 'antd';
 import { SendApiRequest } from '../framework/api';
+
+const {Title} = Typography;
 
 function ManageEmployees() {
 
-  const [tableData,setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     async function load_data() {
       let data = await SendApiRequest({
-        endpoint:"classroom/get_employees_under_manager",
-        authenticated:true,
+        endpoint: "classroom/get_employees_under_manager",
+        authenticated: true,
       });
       setTableData(data["employees"]);
     }
     load_data();
-  },[])
+  }, [])
   const columns = [
     {
       title: 'Employee ID',
@@ -24,55 +26,57 @@ function ManageEmployees() {
       render: (text) => <a>{text}</a>,
     },
     {
-        title: (
-            <Popover
-              placement="topLeft"
-              title="Employee Name"
-              content="Here's pop up Text"
-              trigger="hover"
-            >
-              <span>Employee Name</span>
-            </Popover>
-        ),
-        dataIndex:'username',
+      title: (
+        <Popover
+          placement="topLeft"
+          title="Employee Name"
+          content="Here's pop up Text"
+          trigger="hover"
+        >
+          <span>Employee Name</span>
+        </Popover>
+      ),
+      dataIndex: 'username',
     },
     {
-      title:'Classroom',
-      dataIndex:'classroom',
+      title: 'Classroom',
+      dataIndex: 'classroom',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'Attendance Percentage',
       dataIndex: 'attendance_percentage',
-      align:'center',
+      align: 'center',
       render: (_, record) => (
         // <Flex vertical gap="small" style={{ width: "50%" }}>
         <Progress
-        percent={record.attendance_percentage}
-        percentPosition={{
-          align: 'center',
-          type: 'inner',
-        }}
-        size={[40, 10]}
-        type="dashboard"
-        strokeColor="#B7EB8F"
-      />
+          percent={record.attendance_percentage}
+          percentPosition={{
+            align: 'center',
+            type: 'inner',
+          }}
+          size={[40, 10]}
+          type="dashboard"
+          strokeColor="#B7EB8F"
+        />
         // </Flex>
       ),
     },
   ];
 
-  
+
   return (
-    <>
-      <Divider>Employee Performance</Divider>
+    <Layout style={{margin:"0 16px"}}>
+      <Divider>
+        <Title>Employee Performance</Title>
+      </Divider>
       <div >
-        <Table pagination={{pageSize:5,}} dataSource={tableData} columns={columns} style={{
-          backgroundColor:"rgb(255,255,255,0.52)",
-          backdropFilter:"blur(5px)"
+        <Table pagination={{ pageSize: 5, }} dataSource={tableData} columns={columns} style={{
+          backgroundColor: "rgb(255,255,255,0.52)",
+          backdropFilter: "blur(5px)"
         }} />
       </div>
-    </>
+    </Layout>
   );
 }
 

@@ -20,11 +20,16 @@ import ManageEmployees from './pages/ManageEmployees';
 import ManageTrainers from './pages/ManageTrainers';
 import GuestHome from './pages/GuestHome';
 import { colorBgContainer } from './app/theme';
-import { Header } from 'antd/es/layout/layout';
+import { Footer, Header } from 'antd/es/layout/layout';
 const { Content } = Layout;
 import { ToastContainer, toast } from 'react-toastify';
 
-
+Object.defineProperty(String.prototype, 'capitalize', {
+  value: function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false
+});
 
 
 const App = () => {
@@ -93,12 +98,14 @@ const App = () => {
         <Layout style={{
           backgroundSize: "cover",
           backgroundRepeat: "repeat",
-          height:"100vh"
+          height:"auto",
+          minHeight:"100vh"
         }}>
           <SideBar />
           <Content >
             {PageMap[currentPage]}
           </Content>
+          <Footer/>
         </Layout>
       {/* </Layout > */}
     </ConfigProvider>

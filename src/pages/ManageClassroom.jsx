@@ -1,40 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Space, Table, Tag, Divider, Modal, Button, Progress,Popover, Drawer} from 'antd';
+import { Space, Table, Tag, Divider, Modal, Button, Progress, Popover, Drawer, Typography } from 'antd';
 import { SendApiRequest } from '../framework/api';
 import '../styles/manageclassroom.css';
 import Timeline from '../pages/Timeline';
 
+const { Title } = Typography;
 
 function App() {
-const [isModalOpen, setIsModalOpen] = useState(false);
-const [tableData, setTableData] = useState([]);
-const [modalData,setModalData] = useState([]);
-const [curriculumData, setCurriculumData] = useState({});
-const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const [modalData, setModalData] = useState([]);
+  const [curriculumData, setCurriculumData] = useState({});
+  const [open, setOpen] = useState(false);
 
-// const showDrawer = (record) => {
-//     setCurriculumData(record.modules); 
-//     console.log(record.modules);
-//     setOpen(true);
-//   };
+  // const showDrawer = (record) => {
+  //     setCurriculumData(record.modules); 
+  //     console.log(record.modules);
+  //     setOpen(true);
+  //   };
   const showDrawer = (record) => {
     const transformedEvents = record.modules.map((module, index) => ({
-        heading: `Module ${index + 1}`,    
-        subHeading: module.module_name,    
-        direction: index % 2 === 0 ? "right" : "left"  
+      heading: `Module ${index + 1}`,
+      subHeading: module.module_name,
+      direction: index % 2 === 0 ? "right" : "left"
     }));
-    setCurriculumData(transformedEvents);  
+    setCurriculumData(transformedEvents);
     console.log(curriculumData);
-    setOpen(true);  
-};
-const onClose = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
     setOpen(false);
   };
 
   const showModal = (record) => {
     setModalData(record);
     setIsModalOpen(true);
-    
+
   };
   const handleOk = () => {
     setIsModalOpen(false);
@@ -53,11 +54,11 @@ const onClose = () => {
       setTableData(data['classes'])
 
     }
-   
+
     load_data()
-  }, 
-  
-  [])
+  },
+
+    [])
   const columns = [
     {
       title: 'Classroom',
@@ -71,8 +72,8 @@ const onClose = () => {
       key: 'curriculum',
       render: (_, record) => (
         <Button type="link" onClick={() => showDrawer(record)}>
-        Show Curriculum
-      </Button>
+          Show Curriculum
+        </Button>
       )
     },
     {
@@ -91,29 +92,29 @@ const onClose = () => {
       dataIndex: 'employee_count',
     },
     {
-        title: (
-            <Popover
-              placement="topLeft"
-              title="Progress"
-              content="Percentage completion with regards to number of expected meetings"
-              trigger="hover"
-            >
-              <span>Progress</span>
-            </Popover>
-        ),
+      title: (
+        <Popover
+          placement="topLeft"
+          title="Progress"
+          content="Percentage completion with regards to number of expected meetings"
+          trigger="hover"
+        >
+          <span>Progress</span>
+        </Popover>
+      ),
       key: 'progress',
       dataIndex: 'progress',
       render: (data, record) => (
         <Space size="middle">
           <Progress type="circle" size="small" percent={parseInt(data)} />
-          <a onClick={()=>{
+          <a onClick={() => {
             showModal(record)
-            }}>Learn More</a>
+          }}>Learn More</a>
         </Space>
       ),
     },
   ];
- 
+
   const col2 = [
     {
       title: 'Employee ID',
@@ -133,7 +134,12 @@ const onClose = () => {
 
   return (
     <>
-      <Divider>Classroom Data</Divider>
+      <Divider>
+        <Title>
+          Classroom Data
+        </Title>
+
+      </Divider>
       <Table style={{ padding: '50px' }} columns={columns} dataSource={tableData} />
       <Modal title="Classroom Details" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Table
@@ -142,10 +148,10 @@ const onClose = () => {
           bordered
           title={() => (
             <>
-             <strong> Trainer : {modalData.trainer_name}</strong>
+              <strong> Trainer : {modalData.trainer_name}</strong>
             </>
           )}
-          
+
         />
       </Modal>
       <Drawer
@@ -164,7 +170,7 @@ const onClose = () => {
           </Space>
         }
       >
-    <Timeline eventData={curriculumData}/>
+        <Timeline eventData={curriculumData} />
       </Drawer>
     </>
   )
