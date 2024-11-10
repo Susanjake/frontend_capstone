@@ -1,31 +1,40 @@
-import React from 'react';
-import { Layout, Card, Col, Row, Calendar } from 'antd';
-const { Content,Header } = Layout;
+import React, { useEffect, useState } from 'react';
+import { Layout, Card, Col, Row, Progress, Typography, Divider, Table, Tag } from 'antd';
+const { Content } = Layout;
 import '../styles/StudentCards.css'
+import { SendApiRequest } from '../framework/api'
 
-
-
-function StudentCards() {
+const { Title } = Typography;
+function StudentCards({ data }) {
   return (
     <>
-      <Row gutter={16} style={{ margin: '0 16px' }}>
-        <Col span={6}>
-          <Card title="Courses in progress" bordered={true} className="glass-card">
+      <Row gutter={16} style={{ margin: '0 16px', height: "100%" }} align="middle">
+        <Col span={12}>
+          <Card title="Classroom" bordered={true} style={{ minHeight: "100%", textAlign: "center", paddingTop: "10px",backgroundColor:"#FF8A8A" }}>
+            <p style={{ fontSize: 35 }}>
+              {data.classroom?.title}
+            </p>
           </Card>
         </Col>
-        <Col span={6}>
-          <Card title="Completed Courses" bordered={true} className="glass-card">
-
+        <Col span={4}>
+          <Card title="Attendance" bordered={true} style={{ minHeight: "100%", textAlign: "center" }}  >
+            <div>
+              <Progress type="circle" size={70} percent={parseInt(data.attendance)} steps={5} style={{ minHeight: "100%" }} />
+            </div>
           </Card>
         </Col>
-        <Col span={6}>
-          <Card title="Watching Time" bordered={true} className="glass-card">
-
+        <Col span={4}>
+          <Card title="Trainer" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
+            <div>
+              {data.trainer}
+            </div>
           </Card>
         </Col>
-        <Col span={6}>
-          <Card title="Certificates Achieved" bordered={true} className="glass-card">
-
+        <Col span={4}>
+          <Card title="Manager" bordered={true} style={{ minHeight: "100%", textAlign: "center", fontSize: 20, fontWeight: 900 }}>
+            <div>
+              {data.manager}
+            </div>
           </Card>
         </Col>
       </Row>
@@ -33,40 +42,100 @@ function StudentCards() {
   )
 }
 
-function UpcomingClasses() {
+
+function StudentHome() {
+
+  const [data, setData] = useState([]);
+  const [tableData, setTableData] = useState([]);
+
+  const columns = [
+    {
+      title: 'Title',
+      dataIndex: 'meeting_name',
+      key: 'meeting_name',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Meeting Date',
+      dataIndex: 'meeting_date',
+      key: 'meeting_date',
+    },
+    {
+      title: 'Start Time',
+      dataIndex: 'start_time',
+      key: 'start_time'
+    },
+    {
+      title: 'End Time',
+      dataIndex: 'end_time',
+      key: 'end_time'
+    },
+    {
+      title: 'Status',
+      dataIndex: 'conducted',
+      key: 'conducted',
+      render: (data, record) => {
+        console.log("data is", data, "record is", record)
+        return data ? <Tag color="green">Conducted</Tag> : <Tag color="red">Expired</Tag>
+      },
+      filters: [
+        {
+          text: 'Conducted',
+          value: 'Conducted',
+        },
+      ],
+      onFilter: (value, record) => {
+        console.log("record is ", record)
+        return record.conducted
+      },
+    }
+  ];
 
 
-  const onPanelChange = (value, mode) => {
-    console.log(value.format('YYYY-MM-DD'), mode);
-  };
+  useEffect(() => {
+    async function load_data() {
+      let data = await SendApiRequest({
+        endpoint: "classroom/get_student_details",
+        authenticated: true,
+      });
+      setData(data);
+    }
+    load_data();
+  }, [])
 
+  useEffect(() => {
+    async function load_data() {
+      let data = await SendApiRequest({
+        endpoint: "classroom/get_meetings",
+        authenticated: true,
+      });
+
+      setTableData(data);
+
+    }
+    load_data();
+  }, [])
   return (
-    <>
-      <>
-
-        <div>
-          <h2>Upcoming Events</h2>
-        </div>
-        <div>
-
-        </div>
-      </>
-    </>
-  )
+    <Layout style={{ margin: "0 16px" }}>
+      <Layout style={{ height: "40vh" }}>
+        <Title level={4}>
+          Hey {data?.user?.username}
+        </Title>
+        <Content>
+          <StudentCards data={data} />
+        </Content>
+      </Layout>
+      <Divider />
+      <Layout>
+        <Title level={4}>
+          Upcoming Meetings
+        </Title>
+        <Content >
+          <Table pagination={{ pageSize: 4 }} columns={columns} dataSource={tableData['meetings']} />
+        </Content>
+      </Layout>
+    </Layout>
+  );
 }
-
-
-const StudentHome = () => (
-  <Layout>
-    <Header>
-      <h1>Overview</h1>
-    </Header>
-    <Content>
-      <StudentCards />
-      <UpcomingClasses />
-    </Content>
-  </Layout>
-);
-
 
 export default StudentHome;
