@@ -10,7 +10,11 @@ function StudentCards({ data }) {
     <>
       <Row gutter={16} style={{ margin: '0 16px', height: "100%" }} align="middle">
         <Col span={12}>
-          <Card title="Classroom" bordered={true} style={{ minHeight: "100%", textAlign: "center", paddingTop: "10px",backgroundColor:"#FF8A8A" }}>
+          <Card title="Classroom" bordered={true} style={{
+            minHeight: "100%",
+            textAlign: "center",
+            paddingTop: "10px"
+          }}>
             <p style={{ fontSize: 35 }}>
               {data.classroom?.title}
             </p>
