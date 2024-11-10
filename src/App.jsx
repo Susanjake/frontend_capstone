@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css'
-import { Layout, ConfigProvider } from 'antd';
+import { Layout, ConfigProvider, theme } from 'antd';
 import HeaderStudent from './components/header';
 import StudentHome from './pages/StudentHome';
 import SideBar from './components/SideBar';
@@ -22,6 +22,7 @@ import GuestHome from './pages/GuestHome';
 import { colorBgContainer } from './app/theme';
 import { Header } from 'antd/es/layout/layout';
 const { Content } = Layout;
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -61,6 +62,7 @@ const App = () => {
           // Seed Token
           colorPrimary: '',
           borderRadius: 2,
+          fontSize:16,
           //itemBg: "#00FFFF",
 
           // Alias Token
@@ -75,18 +77,23 @@ const App = () => {
             itemBg: "#FFFFFF",
             triggerBg: colorBgContainer,
             triggerColor: "blue",
+          },
+          Card:{
+            borderRadius:"8px",
+            borderRadiusLG:"20px"
           }
-        }
+        },
+        algorithm:theme.compactAlgorithm
       }}
     >
       {/* <HeaderStudent /> */}
-
+      <ToastContainer/>
       {/* <Layout> */}
         {/* <Header title="Samarthya" /> */}
         <Layout style={{
           backgroundSize: "cover",
           backgroundRepeat: "repeat",
-          height:"89vh"
+          height:"100vh"
         }}>
           <SideBar />
           <Content >
