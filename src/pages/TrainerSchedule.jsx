@@ -124,9 +124,9 @@ function TrainerSchedule() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", fontSize: "20px", fontWeight: 600 }}>Pick a date and schedule a meeting</h1>
-      <Flex align="center" justify="center">
-
+      
+      <h1 style={{ textAlign: "center", fontSize: "30px", fontWeight: 400, color:'#1e40af',padding:'20px' }}>Schedule a meeting</h1>
+      <div className='card shadow' style={{padding:'10px'}}>
         <Calendar onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1, "day"))}
         />
         {/* Input form -- modal */}
@@ -167,7 +167,8 @@ function TrainerSchedule() {
 
           </Form>
         </Modal>
-      </Flex>
+      </div>
+     
     </>
   );
 }

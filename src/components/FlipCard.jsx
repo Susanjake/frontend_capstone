@@ -12,9 +12,10 @@ export default function ({ title, subTitle, backText, buttonText, onClick }) {
                 <div class="flip-card-mod-back" >
                     <p class="title">{backText}</p>
                     <div style={{ textAlign:"center" }}>
-                        <Button onClick={onClick} type="primary" style={{borderRadius:"8px"}}>
+                        {buttonText && (<Button onClick={onClick} type="primary" style={{borderRadius:"8px"}}>
                             {buttonText}
-                        </Button>
+                        </Button>)}
+                        
                     </div>
 
                 </div>

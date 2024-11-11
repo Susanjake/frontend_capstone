@@ -92,7 +92,7 @@ function App() {
   return (
     <>
       <Divider>
-        <Title>Trainers</Title>
+        <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px'}}>Trainers</Title>
       </Divider>
       <Table style={{ padding: '50px' }} columns={columns} dataSource={tableData} />
       <Modal width={"50%"} title="Meeting Details" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} >

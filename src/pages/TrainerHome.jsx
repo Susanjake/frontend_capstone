@@ -8,6 +8,10 @@ import FlipCard from '../components/FlipCard';
 const { Title } = Typography;
 import SchoolIcon from '@mui/icons-material/School';
 import StudentDashboardCard from './StudentDashboardCard';
+import '../styles/studentattendancecard.css';
+import { useDispatch } from 'react-redux';
+import { setPage } from '../app/actions';
+
 async function getAbsentees() {
   try {
     console.log("calling")
@@ -25,19 +29,23 @@ async function getAbsentees() {
 
 function TrainerCards({ data }) {
   console.log(data)
+  const dispatch = useDispatch();
   return (
     <>
 
       <Row gutter={16} style={{ margin: '0 16px' }}>
         <Col span={8}>
-          <FlipCard title="Classroom" subTitle={"View More"} backText={data?.classroom?.title} />
+          <FlipCard title="Classroom" backText={data?.classroom?.title} />
         </Col>
 
         <Col span={8}>
-          <FlipCard title="Average Attendance" subTitle={"View More"} backText={`${parseInt(data?.average_attendance)}%`} />
+          <FlipCard title="Average Attendance" backText={`${parseInt(data?.average_attendance)}%`} />
         </Col>
         <Col span={8}>
-          <FlipCard title="Meetings Conducted" subTitle={"View More"} backText={parseInt(data?.meetings_conducted)} buttonText={"Schedule New Meeting"} />
+          <FlipCard title="Meetings Conducted"
+           backText={parseInt(data?.meetings_conducted)} 
+           buttonText={"Schedule New Meeting"}
+           onClick={()=>{dispatch(setPage("trainer_schedule"))}}/>
         </Col>
       </Row>
     </>
@@ -99,9 +107,13 @@ function TableAbsentees() {
   ];
   return (
     <>
-      <Title style={{ textAlign: "center" }}>Absentees Today</Title>
       {errormsg === '' ?
-        <Table dataSource={absentees} columns={columns} /> :
+        <div class="lightwork-card" style={{ boxShadow: '2px 2px 5px #60a5fa, -20px -20px 60px #ffffff', }}>
+          <div class="bg"></div>
+          <div class="blob"></div>
+
+          <Table dataSource={absentees} pagination={{pageSize:4}} columns={columns} style={{ width: '80%' }} /> </div> :
+
         <h1 style={{ textAlign: "center" }}>{errormsg}</h1>
       }
     </>
@@ -131,8 +143,8 @@ function TrainerHome() {
     <div>
       <Layout>
         <div>
-        {/* <Title level={4}>Welcome <span style={{ color: "grey" }}>{dashboardData?.user?.username.capitalize()}</span></Title> */}
-        <StudentDashboardCard studentname={`Welcome ${dashboardData?.user?.username.capitalize()}`} />
+          {/* <Title level={4}>Welcome <span style={{ color: "grey" }}>{dashboardData?.user?.username.capitalize()}</span></Title> */}
+          <StudentDashboardCard studentname={`Welcome ${dashboardData?.user?.username.capitalize()}`} />
 
         </div>
         <Content style={{ marginTop: '20px' }}>
@@ -140,13 +152,27 @@ function TrainerHome() {
 
           <Divider />
 
-          <Row align="middle">
-            <Col span={12}>
-              <Title>Training Progress</Title>
-              <Progress type="circle" percent={dashboardData?.percent_progress} />
+          <Row align="middle" gutter={18}>
+            <Col span={8}>
+              <Title level={4} style={{ textAlign: 'center', width: '100%', color: '#1e40af' }}>
+                Curriculum Progress
+              </Title>
+              <div class="lightwork-card" style={{ boxShadow: '2px 2px 5px #60a5fa, -20px -20px 60px #ffffff', paddingBottom: '50px' }} >
+
+                <div class="bg"></div>
+                <div class="blob"></div>
+                <Title>Training Progress</Title>
+                <Progress type="circle" percent={dashboardData?.percent_progress} />
+              </div>
+
+
             </Col>
-            <Col span={12}>
+            <Col span={16}>
+              <Title level={4} style={{ textAlign: 'center', width: '100%', color: '#1e40af' }}>
+                Absentee Information
+              </Title>
               <TableAbsentees />
+
             </Col>
           </Row>
 
