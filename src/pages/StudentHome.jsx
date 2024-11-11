@@ -84,7 +84,7 @@ function StudentHome() {
       key: 'conducted',
       render: (data, record) => {
         console.log("data is", data, "record is", record)
-        return data ? <Tag color="green">Conducted</Tag> : <Tag color="red">Expired</Tag>
+        return data ? <Tag color="green">Started</Tag> : <Tag color="yellow">Scheduled</Tag>
       },
       filters: [
         {

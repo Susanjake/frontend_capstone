@@ -63,7 +63,7 @@ export async function SendApiRequest({ endpoint, method = "GET", data = {}, auth
         let result = await response.json();
         if (!result.ok) {
             console.log("error here", result.error)
-            if (endpoint !== "classroom/get_employees_attendance_list") {
+            if (endpoint !== "classroom/get_employees_attendance_list" && endpoint!== "classroom/get_absentees_list") {
                 toast(result.error)
             }
         }
