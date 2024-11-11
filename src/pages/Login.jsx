@@ -52,7 +52,7 @@ export default function () {
     return (
         <Row align="middle" style={{ minHeight: "100vh" }}>
 
-            <Col span={12}>
+            <Col span={14}>
                 <div style={{ textAlign: "center",margin:20 }}>
                     <img src="assets/image.png" width={300} />
                 </div>
@@ -87,7 +87,7 @@ export default function () {
                 />
             </Col>
 
-            <Col span={12}>
+            <Col span={10}>
                 <Card className="form" style={{
                     backdropFilter: "blur(5px)",
                     backgroundColor: "rgba(255, 255, 255, .55)",
