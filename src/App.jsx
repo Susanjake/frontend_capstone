@@ -82,6 +82,7 @@ const App = () => {
             itemBg: "#FFFFFF",
             triggerBg: colorBgContainer,
             triggerColor: "blue",
+            bodyBg:"white"
           },
           Card: {
             borderRadius: "8px",
@@ -100,7 +101,6 @@ const App = () => {
         backgroundRepeat: "repeat",
         height: "auto",
         minHeight: "100vh",
-        width:"auto",
       }}>
         <SideBar />
         <Content 
@@ -112,7 +112,7 @@ const App = () => {
           >
           {PageMap[currentPage]}
         </Content>
-        <Footer />
+        {/* <Footer /> */}
       </Layout>
       {/* </Layout > */}
     </ConfigProvider>
