@@ -148,7 +148,7 @@ function StudentHome() {
                 <Title level={4} style={{textAlign:'center', width:'100%'}}>
                     Meetings
                   </Title>
-                  <div class="card">
+                  <div class="lightwork-card">
                     <div class="bg"></div>
                     <div class="blob"></div>
 
@@ -163,7 +163,7 @@ function StudentHome() {
                   <Title level={4} style={{textAlign:'center', width:'100%'}}>
                     Average attendance
                   </Title>
-                  <div class="card">
+                  <div class="lightwork-card">
 
                     <div class="bg"></div>
                     <div class="blob"></div>
