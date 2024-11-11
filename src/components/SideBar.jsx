@@ -70,7 +70,7 @@ export default function () {
                 break;
             case 'trainer':
                 items.push(getItem('Home', 'trainer_home', <HomeIcon />));
-                items.push(getItem('Students', 'trainer_student', <PeopleAltIcon />));
+                //items.push(getItem('Students', 'trainer_student', <PeopleAltIcon />));
                 // items.push(getItem('Assignments',''));
                 items.push(getItem('Schedule Meeting', 'trainer_schedule', <ScheduleIcon />));
                 items.push(getItem('Attendance', 'trainer_attendance', <PlaylistAddCheckIcon />));
@@ -103,8 +103,8 @@ export default function () {
             onCollapse={(value) => setCollapsed(value)}
             style={{
                 background: "white",
-                position:"fixed",
-                height:"100vh"
+                // position:"fixed",
+                height:"auto"
             }}
         >
             <div className="demo-logo-vertical" />

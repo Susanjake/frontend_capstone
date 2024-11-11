@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Space, Table, Tag, Divider, Modal, Button, Progress, Popover, Flex,Typography, Layout } from 'antd';
 import { SendApiRequest } from '../framework/api';
+import '../styles/manageemployees.css';
 
 const {Title} = Typography;
 
@@ -71,7 +72,14 @@ function ManageEmployees() {
         <Title>Employee Performance</Title>
       </Divider>
       <div >
-        <Table pagination={{ pageSize: 5, }} dataSource={tableData} columns={columns} style={{
+      {/* <Table
+      rowClassName={() => "rowClassName1"}
+      bordered
+      columns={columns}
+      dataSource={tableData}
+    /> */}
+
+        <Table headerBorderRadius={8} pagination={{ pageSize: 5, }} dataSource={tableData} columns={columns } style={{
           backgroundColor: "rgb(255,255,255,0.52)",
           backdropFilter: "blur(5px)"
         }} />

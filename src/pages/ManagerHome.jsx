@@ -86,7 +86,7 @@ export default function Dashboard() {
     }, [selectedClassroom]);
 
     return (
-        <Layout style={{ paddingLeft: '80px' }}>
+        <Layout >
             <Title>Dashboard</Title>
             <Divider className='dashboardDivider' />
             <Layout style={{ height: "25%" }}>
@@ -141,7 +141,7 @@ export default function Dashboard() {
                     </Col>
                     {/* Bar Chart */}
                     <Col span={12}>
-                        <Divider><Title level={2}>Employee Statistics</Title></Divider>
+                        <Divider><Title level={4} style={{ color: '#1e40af' }}>Employee Statistics</Title></Divider>
                         {pieChartData.length !== 0 && <PieChart
                             series={pieChartData}
                             width={400}
@@ -151,6 +151,9 @@ export default function Dashboard() {
                 </Row>
                 <Row>
                     <Divider />
+                    <Title level={4} style={{ color: '#1e40af',textAlign:'center', width:'100%' }}>
+                            Average attendance percentage </Title>
+                            
                     <Card style={{ width: "100%", borderColor: "black", height: "100%", }} bordered>
                         <ResponsiveContainer width="100%" height={300}>
                             <BarChart
@@ -164,11 +167,10 @@ export default function Dashboard() {
                                 />
                                 <YAxis ticks={[10, 20, 30, 40, 50, 60, 70, 80, 90, 100]} />
                                 <CartesianGrid strokeDasharray="5 5" />
-                                <Tooltip />
-
+                                <Tooltip/>
                                 <Bar dataKey="attendance" fill="#8884d8" animationDuration={5000} animationEasing="ease-in" />
                             </BarChart>
-                            <p style={{ fontSize: 12, textAlign: "center" }}>Attendance Percentage</p>
+                            <p style={{ fontSize: 12, textAlign: "center" }}>Percentage vs Classroom</p>
                         </ResponsiveContainer>
                     </Card>
                 </Row>
