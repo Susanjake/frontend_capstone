@@ -44,7 +44,7 @@ export default function () {
     function OnUserClickSideBarItem(e) {
         if (e.key === "sign_out") {
             localStorage.clear();
-            dispatch(setPage("guest_home"));
+            dispatch(setPage("login"));
             dispatch(setAuthenticated({ authenticated: false, role: '' }))
             window.location.reload()
         } else {
@@ -88,7 +88,7 @@ export default function () {
 
     } else {
         // Side bar item for non logged in user
-        items.push(getItem('Home', 'guest_home', <HomeIcon />));
+        //items.push(getItem('Home', 'guest_home', <HomeIcon />));
         items.push(getItem('Login', 'login', <LoginIcon />));
         items.push(getItem('Register', 'register', <HowToRegIcon />));
     }
@@ -104,10 +104,13 @@ export default function () {
             style={{
                 background: "white",
                 // position:"fixed",
-                height:"auto"
+                height: "auto"
             }}
         >
             <div className="demo-logo-vertical" />
+            <div style={{ textAlign: "center",marginLeft:"25%",marginBottom:"15%",marginTop:"15%" }}>
+                <img src="assets/image.png" width={100} />
+            </div>
             <Menu
                 defaultSelectedKeys={['home']}
                 mode="inline" items={items}

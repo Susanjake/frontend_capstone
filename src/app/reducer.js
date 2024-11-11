@@ -1,5 +1,5 @@
 const initialState = {
-    currentPage: "guest_home",
+    currentPage: "login",
     userInfo: {
         authenticated: false,
         role:'',
