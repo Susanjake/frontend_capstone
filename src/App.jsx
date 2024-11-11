@@ -65,7 +65,7 @@ const App = () => {
       theme={{
         token: {
           // Seed Token
-          colorPrimary: '',
+          colorPrimary: '#1e40af',
           borderRadius: 2,
           fontSize: 16,
           //itemBg: "#00FFFF",
@@ -99,13 +99,17 @@ const App = () => {
         backgroundSize: "cover",
         backgroundRepeat: "repeat",
         height: "auto",
-        minHeight: "100vh"
+        minHeight: "100vh",
+        width:"auto",
       }}>
         <SideBar />
-        <Content width="75%"
+        <Content 
+        // width="100%"
           style={{
-            marginLeft: '25%'
-          }} >
+            marginLeft: '5%',
+          }}
+          
+          >
           {PageMap[currentPage]}
         </Content>
         <Footer />
