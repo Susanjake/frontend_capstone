@@ -1,97 +1,85 @@
 import React, { useEffect, useState } from 'react'
-import { Layout,Card,Col,Row,Calendar,Table, Flex } from 'antd';
+import { Layout, Card, Col, Row, Calendar, Table, Flex, Progress, Divider, Tag } from 'antd';
 const { Content } = Layout;
 import { LineChart } from '@mui/x-charts/LineChart';
 import { SendApiRequest } from '../framework/api';
-
-
-async function getAbsentees(){
-  try{
+import { Typography } from "antd";
+import FlipCard from '../components/FlipCard';
+const { Title } = Typography;
+import SchoolIcon from '@mui/icons-material/School';
+async function getAbsentees() {
+  try {
+    console.log("calling")
     let data = await SendApiRequest({
-      endpoint:"classroom/get_absentees_list",
-      authenticated:true,
+      endpoint: "classroom/get_absentees_list",
+      authenticated: true,
     });
-    console.log("Student absentees data",data);
     return data
-  }catch (error){
+  } catch (error) {
     console.log(error);
   }
 }
 
-function TrainerCards(){
-  return (
-  <>
-  
-  <Row gutter={16} style={{ margin: '0 16px' }}>
-  <Col span={12}>
-    <Card title="Syllabus" bordered={true} className="glass-card">
-      
-    </Card>
-  </Col>
 
-  <Col span={12}>
-    <Card title="Assignments" bordered={true} className="glass-card">
-      
-    </Card>
-  </Col>
-  
-</Row>
-</>
+
+function TrainerCards({ data }) {
+  console.log(data)
+  return (
+    <>
+
+      <Row gutter={16} style={{ margin: '0 16px' }}>
+        <Col span={8}>
+          <FlipCard title="Classroom" subTitle={"View More"} backText={data?.classroom?.title} />
+        </Col>
+
+        <Col span={8}>
+          <FlipCard title="Average Attendance" subTitle={"View More"} backText={`${parseInt(data?.average_attendance)}%`} />
+        </Col>
+        <Col span={8}>
+          <FlipCard title="Meetings Conducted" subTitle={"View More"} backText={parseInt(data?.meetings_conducted)} buttonText={"Schedule New Meeting"} />
+        </Col>
+      </Row>
+    </>
   )
 }
 
-function AttendenceGraph(){
+function AttendenceGraph() {
   return (
     <>
-    <h4>Attendance Analysis
-    </h4>
-    <LineChart style={{width:'100%'}}
-      xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-      series={[
-        {
-          data: [2, 5.5, 2, 8.5, 1.5, 5],
-        },
-      ]}
-      width={500}
-      height={300}
-    />
+      <h4>Attendance Analysis
+      </h4>
+      <LineChart style={{ width: '100%' }}
+        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+        series={[
+          {
+            data: [2, 5.5, 2, 8.5, 1.5, 5],
+          },
+        ]}
+        width={500}
+        height={300}
+      />
     </>
   );
 
 }
 
-function TableAbsentees(){
-  const [absentees,setAbsentees] = useState([]);
-  const [errormsg,setErrorMsg] = useState('');
+function TableAbsentees() {
+  const [absentees, setAbsentees] = useState([]);
+  const [errormsg, setErrorMsg] = useState('');
   //use effect runs after render
-  useEffect(()=>{
-    async function fetchAbsentees(){
+  useEffect(() => {
+    async function fetchAbsentees() {
       let data = await getAbsentees();
-      if(data.ok === true){
+      if (data.ok === true) {
         setAbsentees(data.absentees);
       }
-      else{
+      else {
         setErrorMsg(data.error);
       }
     }
     fetchAbsentees();
-  },[]);
+  }, []);
 
-  const dataSource = [
-    {
-      key: '1',
-      rollno:'1',
-      name: 'Mike',
-      
-    },
-    {
-      key: '2',
-      rollno:'2',
-      name: 'Mike',
-      
-    },
-  ];
-  
   const columns = [
     {
       title: 'EmpId',
@@ -103,41 +91,67 @@ function TableAbsentees(){
       dataIndex: 'username',
       key: 'username',
     },
- 
+
   ];
-  return(
+  return (
     <>
-    <h4>Absentees Today</h4>
-  {errormsg === '' ?
-  <Table dataSource={absentees} columns={columns} /> :
-  <h1>{errormsg}</h1>
-}
-  </>
+      <Title style={{ textAlign: "center" }}>Absentees Today</Title>
+      {errormsg === '' ?
+        <Table dataSource={absentees} columns={columns} /> :
+        <h1 style={{ textAlign: "center" }}>{errormsg}</h1>
+      }
+    </>
   )
 
 }
 function TrainerHome() {
+  const [dashboardData, setDashboardData] = useState('');
+
+  useEffect(() => {
+    async function getDashboardDetails() {
+      try {
+        let data = await SendApiRequest({
+          endpoint: "classroom/get_trainer_dashboard_details",
+          authenticated: true,
+        });
+        setDashboardData(data)
+      } catch (error) {
+
+      }
+    }
+    getDashboardDetails();
+  }, []);
+
   return (
 
     <div>
-    <Layout>
-      <Content style={{marginTop:'20px'}}>
-      <TrainerCards/>
-      <div className='bigdiv' style={{display: 'flex', padding:'50px'}}>
+      <Layout>
+        <Divider><Title>Dashboard</Title></Divider>
+        <Tag color="green">
+        <Title level={4}>Welcome <span style={{ color: "grey" }}>{dashboardData?.user?.username.capitalize()}</span></Title>
+        </Tag>
+        <Content style={{ marginTop: '20px' }}>
+          <TrainerCards data={dashboardData} />
 
-        <div className='attendence-div'
-        style={{flex:1}}
-        >
-        <AttendenceGraph />
-        </div>
+          <Divider />
 
-        <div className='absent-div'
-        style={{flex:1}}>
-        <TableAbsentees/>
-        </div>
-      </div>
-      </Content>
-    </Layout>
+          <Row align="middle">
+            <Col span={12}>
+              <Title>Training Progress</Title>
+              <Progress type="circle" percent={dashboardData?.percent_progress} />
+            </Col>
+            <Col span={12}>
+              <TableAbsentees />
+            </Col>
+          </Row>
+
+          <div className='absent-div'
+            style={{ flex: 1 }}>
+
+          </div>
+
+        </Content>
+      </Layout>
     </div>
   )
 }
