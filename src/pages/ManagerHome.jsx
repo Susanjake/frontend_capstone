@@ -99,7 +99,7 @@ export default function Dashboard() {
                 <Row gutter={30}>
 
                     {/* Timeline and Progress chart */}
-                    <Col span={16}>
+                    <Col span={12}>
                         <Card bordered style={{ width: "100%", borderColor: "black" }}>
                             <div style={{
                                 overflow: "auto",
@@ -121,10 +121,10 @@ export default function Dashboard() {
                                 />
                             </div>
                             <Row>
-                                <Col span={20}>
+                                <Col span={18}>
                                     <Timeline eventData={timelineData} />
                                 </Col>
-                                <Col span={4}>
+                                <Col span={6}>
                                     <Popover content={<p>Completion percentage with respect to the deadline</p>} title="Completion percentage">
                                         <Progress
                                             type="dashboard"
@@ -140,7 +140,7 @@ export default function Dashboard() {
                         </Card>
                     </Col>
                     {/* Bar Chart */}
-                    <Col span={8}>
+                    <Col span={12}>
                         <Divider><Title level={2}>Employee Statistics</Title></Divider>
                         {pieChartData.length !== 0 && <PieChart
                             series={pieChartData}

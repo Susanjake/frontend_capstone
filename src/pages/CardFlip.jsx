@@ -15,10 +15,10 @@ function Number({ n }) {
     config: { mass: 1, tension: 20, friction: 10 },
   });
   return (
-  <animated.div className='animatedNumber' >
-    {number.to((n) => n.toFixed(0))}
+    <animated.div className='animatedNumber' >
+      {number.to((n) => n.toFixed(0))}
     </animated.div>
-    
+
   )
 }
 function viewEmployeeDetailsButton() {
@@ -51,22 +51,25 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
         >
           <div className="flip-card-front w-[100%] h-[100%] bg-cover border-[1px] text-white rounded-lg p-4 bg-gradient-to-r from-blue-400 to-cyan-700 ">
 
-            <Divider style={{color:'white'}}><h1 className='text-white'>{dividerTitle}</h1></Divider>
-            
+            <Divider style={{ color: 'white' }}><h1 className='text-white'>{dividerTitle}</h1></Divider>
+
             <Number n={numberDetail} />
-            
+
 
           </div>
-          <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] rounded-lg p-4 bg-slate-200">
-            <h1 className="text-2xl font-bold  text-yellow-200">Know more</h1>
+          <div className="flip-card-back w-[100%] h-[100%] bg-cover border-[1px] rounded-lg p-4 bg-blue-200">
+            {/* <h1 className="text-2xl font-bold  text-white">Know more</h1> */}
             <button
-              className='text-font-bold justify-center bg-orange-100 rounded-lg w-full h-1/4'
+              className='font-bold justify-center bg-blue-400 rounded-lg w-full h-2/4 
+             bg-gradient-to-r from-blue-400 to-cyan-700 
+             hover:from-cyan-700 hover:to-blue-400'
               onClick={(e) => {
                 e.stopPropagation();
                 onButtonClick();
               }}
             >
-              {buttonText}
+
+          <span style={{ color: 'white' }}>{buttonText}</span>
             </button>
           </div>
         </motion.div>
@@ -75,19 +78,23 @@ function FlipCard({ numberDetail, dividerTitle, buttonText, onButtonClick }) {
   );
 }
 
-function CardFlip({statistics}) {
+function CardFlip({ statistics }) {
   const dispatch = useDispatch();
-  
+
   function viewClassRoomButton() {
-   
-    console.log("erhewuirh");
     dispatch(setPage('manage_classroom'));
+  }
+  function viewEmployeeDetailsButton() {
+    dispatch(setPage('manage_employees'));
+  }
+  function viewTrainerDetailsButton() {
+    dispatch(setPage('manage_trainers'));
   }
   return (
     <div className="flex items-center justify-center space-x-10">
       <FlipCard numberDetail={statistics.classroom_count} dividerTitle="Classrooms" buttonText="View Classrooms" onButtonClick={viewClassRoomButton} />
-      <FlipCard numberDetail={statistics.employees_under_manager_count} dividerTitle="Employees" buttonText="View Employees" onButtonClick={viewEmployeeDetailsButton}/>
-      <FlipCard numberDetail={statistics.trainer_count} dividerTitle="Trainers" buttonText="View Trainers" onButtonClick={viewEmployeeDetailsButton}/>
+      <FlipCard numberDetail={statistics.employees_under_manager_count} dividerTitle="Employees" buttonText="View Employees" onButtonClick={viewEmployeeDetailsButton} />
+      <FlipCard numberDetail={statistics.trainer_count} dividerTitle="Trainers" buttonText="View Trainers" onButtonClick={viewTrainerDetailsButton} />
     </div>
   );
 }
