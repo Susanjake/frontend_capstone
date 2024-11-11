@@ -98,7 +98,7 @@ function TrainerAttendance() {
               loading ? <Skeleton active /> : (<List.Item key={item.user_id}>
                 <List.Item.Meta
                   avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
-                  title={item.username} // Adjust as needed
+                  title={item.username.capitalize()} // Adjust as needed
                   description={item.user_id}
                 />
                 <Radio.Group>
