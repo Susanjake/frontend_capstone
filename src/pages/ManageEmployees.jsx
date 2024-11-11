@@ -25,6 +25,7 @@ function ManageEmployees() {
       dataIndex: 'user_id',
       key: 'user_id',
       render: (text) => <a>{text}</a>,
+      align:'center',
     },
     {
       title: (
@@ -38,11 +39,14 @@ function ManageEmployees() {
         </Popover>
       ),
       dataIndex: 'username',
+      align:'center',
+      render: (text) => <a>{text.capitalize()}</a>,
     },
     {
       title: 'Classroom',
       dataIndex: 'classroom',
       render: (text) => <a>{text}</a>,
+      align:'center',
     },
     {
       title: 'Attendance Percentage',

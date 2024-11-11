@@ -86,11 +86,14 @@ function TableAbsentees() {
       title: 'EmpId',
       dataIndex: 'user_id',
       key: 'user_id',
+      align:'center'
     },
     {
       title: 'Name',
       dataIndex: 'username',
       key: 'username',
+      render: (text) => <a>{text.capitalize()}</a>,
+      align:'center'
     },
 
   ];

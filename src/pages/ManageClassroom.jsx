@@ -65,6 +65,7 @@ function App() {
       dataIndex: 'title',
       key: 'title',
       render: (text) => <a>{text}</a>,
+      align: 'center',
     },
     {
       title: 'Curriculum',
@@ -74,22 +75,29 @@ function App() {
         <Button type="link" onClick={() => showDrawer(record)}>
           Show Curriculum
         </Button>
-      )
+      ),
+      align: 'center',
     },
     {
       title: 'Start Date',
       dataIndex: 'start_date',
       key: 'start_date',
+      width:"25%",
+      align: 'center',
     },
     {
       title: 'End Date',
       dataIndex: 'eod',
       key: 'eod',
+      width:"25%",
+      align: 'center',
+
     },
     {
       title: 'Number of Employees',
       key: 'employee_count',
       dataIndex: 'employee_count',
+      align: 'center',
     },
     {
       title: (
@@ -107,11 +115,12 @@ function App() {
       render: (data, record) => (
         <Space size="middle">
           <Progress type="circle" size="small" percent={parseInt(data)} />
-          <a onClick={() => {
+          <Button type="link" onClick={() => {
             showModal(record)
-          }}>Learn More</a>
+          }}>View Info</Button>
         </Space>
       ),
+      width:"20%",
     },
   ];
 
@@ -121,11 +130,14 @@ function App() {
       dataIndex: 'user_id',
       key: 'user_id',
       render: (text) => <a>{text}</a>,
+      align: 'center',
     },
     {
       title: 'Employee Name',
       dataIndex: 'username',
       key: 'username',
+      align: 'center',
+      render: (text) => <a>{text.capitalize()}</a>,
     },
 
   ];

@@ -43,59 +43,16 @@ function App() {
       title: 'Trainer Name',
       dataIndex: 'username',
       key: 'username',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{text.capitalize()}</a>,
     },
     {
       title: "Allocated Class",
       dataIndex: "classroom",
       key: 'classroom',
-      render: (data, record) => <Button color="primary" variant="outlined" onClick={() => showModal(record)}>Meetings Detail</Button>,
+      render: (data, record) => <Button style={{borderRadius:"20px"}} color="primary" variant="outlined" onClick={() => showModal(record)}>Meetings Detail</Button>,
     }
   ];
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '4',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '5',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-    {
-      key: '6',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+  
 
   const col2 = [
     {
@@ -103,52 +60,35 @@ function App() {
       dataIndex: 'meeting_name',
       key: 'meeting_name',
       render: (text) => <a>{text}</a>,
+      align:'center',
     },
     {
       title: 'Meeting Date',
       dataIndex: 'meeting_date',
       key: 'meeting_date',
+      align:'center',
     },
     {
       title: 'Start Time',
       dataIndex: 'start_time',
-      key: 'start_time'
+      key: 'start_time',
+      align:'center',
     },
     {
       title: 'End Time',
       dataIndex: 'end_time',
-      key: 'end_time'
+      key: 'end_time',
+      align:'center',
     },
     {
       title: 'Status',
       dataIndex: 'conducted',
       key: 'conducted',
-      render: (data, record) => data ? <Tag color="green">Conducted</Tag> : <Tag color="yellow">Scheduled</Tag>
+      render: (data, record) => data ? <Tag color="green">Conducted</Tag> : <Tag color="yellow">Scheduled</Tag>,
+      align:'center',
     }
   ];
-  const data2 = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+  
   return (
     <>
       <Divider>
