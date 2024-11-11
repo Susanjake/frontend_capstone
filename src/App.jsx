@@ -34,7 +34,7 @@ Object.defineProperty(String.prototype, 'capitalize', {
 
 const App = () => {
   const PageMap = {
-    'guest_home': <GuestHome />,
+    //'guest_home': <Login />,
     'trainer_schedule': <TrainerSchedule />,
     'student_home': <StudentHome />,
     'trainer_home': <TrainerHome />,
@@ -76,7 +76,8 @@ const App = () => {
           Menu: {
             itemBg: colorBgContainer,
             itemActiveBg: colorBgContainer,
-            itemSelectedBg: "grey"
+            itemSelectedBg:"#ADD8F7",
+            itemBorderRadius:"12px",
           },
           Layout: {
             itemBg: "#FFFFFF",

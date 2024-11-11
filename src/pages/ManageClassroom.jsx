@@ -82,14 +82,14 @@ function App() {
       title: 'Start Date',
       dataIndex: 'start_date',
       key: 'start_date',
-      width:"25%",
+      width: "25%",
       align: 'center',
     },
     {
       title: 'End Date',
       dataIndex: 'eod',
       key: 'eod',
-      width:"25%",
+      width: "25%",
       align: 'center',
 
     },
@@ -107,7 +107,7 @@ function App() {
           content="Percentage completion with regards to number of expected meetings"
           trigger="hover"
         >
-          <span>Progress</span>
+          <span style={{ fontWeight: 600 }}>Progress</span>
         </Popover>
       ),
       key: 'progress',
@@ -120,7 +120,7 @@ function App() {
           }}>View Info</Button>
         </Space>
       ),
-      width:"20%",
+      width: "20%",
     },
   ];
 
@@ -147,7 +147,7 @@ function App() {
   return (
     <>
       <Divider>
-        <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px'}}>
+        <Title style={{ fontSize: "30px", fontWeight: 500, color: '#1e40af', padding: '10px' }}>
           Classroom Data
         </Title>
 
