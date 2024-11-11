@@ -69,7 +69,7 @@ function ManageEmployees() {
   return (
     <Layout style={{margin:"0 16px"}}>
       <Divider>
-        <Title>Employee Performance</Title>
+        <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px'}}>Employee Performance</Title>
       </Divider>
       <div >
       {/* <Table

@@ -186,7 +186,7 @@ export default function () {
             margin: '0 16px',
         }}>
             <Divider>
-                <Title>
+                <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px'}}>
                     Create Classroom
                 </Title>
             </Divider>

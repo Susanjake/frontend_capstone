@@ -87,7 +87,7 @@ export default function Dashboard() {
 
     return (
         <Layout >
-            <Title>Dashboard</Title>
+            <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px',width:'100%',textAlign:'center'}}>Dashboard</Title>
             <Divider className='dashboardDivider' />
             <Layout style={{ height: "25%" }}>
                 <CardFlip statistics={statistics} />

@@ -135,7 +135,7 @@ function App() {
   return (
     <>
       <Divider>
-        <Title>
+        <Title style={{fontSize: "30px", fontWeight: 500, color:'#1e40af',padding:'10px'}}>
           Classroom Data
         </Title>
 
