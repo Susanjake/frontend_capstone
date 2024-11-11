@@ -55,7 +55,7 @@ function ManageEmployees() {
       render: (_, record) => (
         // <Flex vertical gap="small" style={{ width: "50%" }}>
         <Progress
-          percent={record.attendance_percentage}
+          percent={parseInt(record.attendance_percentage)}
           percentPosition={{
             align: 'center',
             type: 'inner',

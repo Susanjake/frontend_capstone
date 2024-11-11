@@ -31,7 +31,7 @@ export default function Dashboard() {
         return attendenceBardata.map((item) => {
             return {
                 x: item.title,
-                attendance: item.average_attendance,
+                attendance: parseInt(item.average_attendance),
             }
         })
     }
