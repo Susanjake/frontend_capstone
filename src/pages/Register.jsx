@@ -36,10 +36,10 @@ export default function () {
         <Layout>
             <Row align="middle" style={{ minHeight: "100vh" }}>
                 {/* {errorMsg !== '' ? (<Alert type="error" message={errorMsg} />) : ''} */}
-                <Col span={12}>
+                <Col span={14}>
                     <img src="assets/register.png" height={200} />
                 </Col>
-                <Col span={12}>
+                <Col span={10}>
                     <Card className="form" style={{
                         backdropFilter: "blur(5px)",
                         backgroundColor: "rgba(255, 255, 255, .55)",
