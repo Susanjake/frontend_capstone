@@ -4,6 +4,8 @@ import { Calendar, Modal, Input, Form, Badge, TimePicker, Flex, Alert } from 'an
 import moment from 'moment';
 import { SendApiRequest } from '../framework/api';
 import dayjs, { Dayjs } from "dayjs";
+import '../styles/shadowcard.css';
+import zIndex from '@mui/material/styles/zIndex';
 
 export default function () {
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -111,11 +113,14 @@ export default function () {
 
     return (
         <>
-            <h1 style={{ textAlign: "center", fontSize: "20px", fontWeight: 600 }}>Pick a meeting to attend</h1>
+            <h1 style={{ textAlign: "center", fontSize: "30px", fontWeight: 400, color:'#1e40af',padding:'20px' }}>Choose a meeting to attend</h1>
 
-
-            <Calendar fullscreen={true} onSelect={onDateClick} cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1, "day"))}
+            
+    <div className='card shadow' style={{padding:'10px'}}>
+            <Calendar fullscreen={true} onSelect={onDateClick} 
+            cellRender={dateCellRender} disabledDate={(current) => current.isBefore(moment().subtract(1, "day"))}
             />
+            
             {/* Input form -- modal */}
             <Modal
                 title="Attend Meeting"
@@ -123,6 +128,7 @@ export default function () {
                 onOk={() => { handleOk(formData[selectedDate]?.meeting_id) }}
                 onCancel={handleCancel}
                 okText="Attend Meeting"
+                style={{zIndex:3}}
 
             >
                 {meetingError !== '' ? <Alert type="error" message={meetingError} /> : ''}
@@ -155,6 +161,7 @@ export default function () {
 
                 </Form>
             </Modal>
+            </div>
 
         </>
     );

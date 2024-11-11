@@ -7,6 +7,7 @@ import { Typography } from "antd";
 import FlipCard from '../components/FlipCard';
 const { Title } = Typography;
 import SchoolIcon from '@mui/icons-material/School';
+import StudentDashboardCard from './StudentDashboardCard';
 async function getAbsentees() {
   try {
     console.log("calling")
@@ -126,10 +127,11 @@ function TrainerHome() {
 
     <div>
       <Layout>
-        <Divider><Title>Dashboard</Title></Divider>
-        <Tag color="green">
-        <Title level={4}>Welcome <span style={{ color: "grey" }}>{dashboardData?.user?.username.capitalize()}</span></Title>
-        </Tag>
+        <div>
+        {/* <Title level={4}>Welcome <span style={{ color: "grey" }}>{dashboardData?.user?.username.capitalize()}</span></Title> */}
+        <StudentDashboardCard studentname={`Welcome ${dashboardData?.user?.username.capitalize()}`} />
+
+        </div>
         <Content style={{ marginTop: '20px' }}>
           <TrainerCards data={dashboardData} />
 
