@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { SendApiRequest } from '../framework/api';
 import '../styles/TrainerAttendance.css';
 import moment from 'moment';
+import { toast } from 'react-toastify';
 
 // Define your StudentInfo function to fetch data from the API
 
@@ -13,73 +14,39 @@ function TrainerAttendance() {
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(undefined);
 
-  async function StudentInfo() {
+  async function LoadStudentInfo() {
     try {
       setLoading(true);
       let data = await SendApiRequest({
         endpoint: "classroom/get_employees_attendance_list",
         authenticated: true,
-        data: {date:selectedDate},
-        method:"POST"
+        data: { date: selectedDate },
+        method: "POST"
       });
-      console.log("Data is", data);
-      setLoading(false)
-      return data;
+      if (data.ok) {
+        setLoading(false)
+        setData(data.members);
+      } else {
+        setData([])
+        toast.info("No Meetings have been scheduled for this day",{position: "bottom-left",})
+      }
     } catch (error) {
       console.error("Error fetching student info:", error);
-      return [];
+      setData([]);
     }
-  }
-
-
-  async function GetRandomPic() {
-    const response = await fetch("https://randomuser.me/api/")
-    if (!response.ok) {
-      throw new Error("Could not fetch resource");
-    }
-    const picdata = await response.json();
-    //console.log(picdata['results'][0].picture.medium);
-    return picdata['results'][0].picture.medium
   }
   const onPanelChange = async (value) => {
-    console.log("Here")
     setSelectedDate(value.format('YYYY-MM-DD'))
     setData([])
-    await loadMoreData();
+    await LoadStudentInfo();
     console.log(value.format('YYYY-MM-DD'));
-  };
-  // Load more data using StudentInfo function
-  const loadMoreData = async () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    try {
-      const newData = await StudentInfo();
-      
-      const membersWithPics = newData.members.map(
-        async (member) => {
-          try {
-            const picUrl = await GetRandomPic();
-            return {
-              ...member,
-              picture: { large: picUrl }
-            };
-          } catch {
-            return member;
-          }
-        });
-      const updatedMembers = await Promise.all(membersWithPics);
-      setData(updatedMembers);
-    } catch {
-      // Handle error if needed
-    } finally {
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
-    loadMoreData();
+    async function loaddata() {
+      await LoadStudentInfo();
+    }
+    loaddata();
   }, []);
 
   async function OnMarkStudentAttendace(e, idx) {
@@ -128,7 +95,7 @@ function TrainerAttendance() {
             className='listattendance'
             dataSource={data}
             renderItem={(item, idx) => (
-              <List.Item key={item.user_id}>
+              loading ? <Skeleton active /> : (<List.Item key={item.user_id}>
                 <List.Item.Meta
                   avatar={<Avatar src={item.picture?.large} />} // Adjust according to your API response
                   title={item.username} // Adjust as needed
@@ -137,7 +104,8 @@ function TrainerAttendance() {
                 <Radio.Group>
                   <Checkbox value="present" checked={item.present} onChange={(e) => OnMarkStudentAttendace(e, idx)}>Present</Checkbox>
                 </Radio.Group>
-              </List.Item>
+              </List.Item>)
+
             )}
           />
 
