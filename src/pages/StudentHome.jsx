@@ -26,8 +26,8 @@ function StudentCards({ data }) {
         <Col span={4}>
           <Card title="Attendance" bordered={true} style={{ minHeight: "100%", textAlign: "center", background: "linear-gradient(to right, #2193b0, #6dd5ed)" }}  >
             <div>
-              <Progress type="circle" size={70} percent={parseInt(data.attendance)} 
-              steps={5} style={{ minHeight: "100%" }} />
+              <Progress type="circle" size={70} percent={parseInt(data.attendance)}
+                steps={5} style={{ minHeight: "100%" }} />
             </div>
           </Card>
         </Col>
@@ -139,27 +139,43 @@ function StudentHome() {
       </Layout> */}
         <Divider />
         <Layout>
-          <Title level={4}>
-            Meetings
-          </Title>
-          <Content
-          >
-            <div class="card">
-              <div class="bg"></div>
-              <div class="blob"></div>
-             
-            <Table pagination={{ pageSize: 4 }} columns={columns} dataSource={tableData['meetings']}
-            />
-            </div>
-            <div class="card">
-              <div class="bg"></div>
-              <div class="blob"></div>
-              <div>
-              <Progress className='attendanceprog' type="circle" size={80} percent={parseInt(data.attendance)} 
-              steps={5} style={{ minHeight: "100%" }} />
-              </div>
-              
-            </div>
+
+
+          <Content style={{ paddingBottom: '30px' }}>
+            <Row gutter={16}>
+              <Col span={16}>
+                <div>
+                <Title level={4} style={{textAlign:'center', width:'100%'}}>
+                    Meetings
+                  </Title>
+                  <div class="card">
+                    <div class="bg"></div>
+                    <div class="blob"></div>
+
+                    <Table pagination={{ pageSize: 4 }} columns={columns} dataSource={tableData['meetings']}
+                    />
+                  </div>
+                </div>
+              </Col>
+
+              <Col span={8}>
+                <div>
+                  <Title level={4} style={{textAlign:'center', width:'100%'}}>
+                    Average attendance
+                  </Title>
+                  <div class="card">
+
+                    <div class="bg"></div>
+                    <div class="blob"></div>
+                    <div>
+                      <Progress className='attendanceprog' type="circle" size={80} percent={parseInt(data.attendance)}
+                        steps={5} style={{ minHeight: "100%" }} />
+                    </div>
+
+                  </div>
+                </div>
+              </Col>
+            </Row>
 
           </Content>
         </Layout>
