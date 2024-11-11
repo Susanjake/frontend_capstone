@@ -152,7 +152,7 @@ function StudentHome() {
                     <div class="bg"></div>
                     <div class="blob"></div>
 
-                    <Table pagination={{ pageSize: 4 }} columns={columns} dataSource={tableData['meetings']}
+                    <Table pagination={{ pageSize: 3 }} columns={columns} dataSource={tableData['meetings']}
                     />
                   </div>
                 </div>
