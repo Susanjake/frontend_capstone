@@ -59,7 +59,7 @@ export default function () {
                 <br/>
                 <TypeAnimation
                     sequence={[
-                        "Empowering Global Teams, One Training at a Time!", 1000,
+                        "Empowering Global Teams One Training at a Time!", 1000,
                         "Transforming Corporate Learning Across Borders.", 1000,
                         "Seamless Training Solutions for a Global Workforce.", 1000,
                         "Maximize Employee Potential, Anytime, Anywhere!", 1000,
@@ -82,7 +82,7 @@ export default function () {
                     ]}
                     wrapper="span"
                     speed={50}
-                    style={{ fontSize: '2em', display: 'inline-block' }}
+                    style={{ fontSize: '2em', display: 'inline-block',color:"#60a5fa" }}
                     repeat={Infinity}
                 />
             </Col>

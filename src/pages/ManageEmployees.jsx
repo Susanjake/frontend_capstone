@@ -36,16 +36,7 @@ function ManageEmployees() {
       align: 'center',
     },
     {
-      title: (
-        <Popover
-          placement="topLeft"
-          title="Employee Name"
-          content="Here's pop up Text"
-          trigger="hover"
-        >
-          <span>Employee Name</span>
-        </Popover>
-      ),
+      title: 'Employee Name',
       dataIndex: 'username',
       align: 'center',
       render: (text) => <a>{text.capitalize()}</a>,

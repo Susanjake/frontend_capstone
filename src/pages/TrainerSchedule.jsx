@@ -66,8 +66,8 @@ function TrainerSchedule() {
     let data = {};
     data['meeting_name'] = formData[selectedDate].meeting_name;
     data['meeting_link'] = formData[selectedDate].meeting_link;
-    data['start_time'] = formData[selectedDate].start_time.format("HH:mm:ss");
-    data['end_time'] = formData[selectedDate].end_time.format("HH:mm:ss");
+    data['start_time'] = dayjs(formData[selectedDate].start_time).format("HH:mm:ss");
+    data['end_time'] = dayjs(formData[selectedDate].end_time).format("HH:mm:ss");
     data['meeting_date'] = selectedDate;
     console.log("data",data,formData)
     await SendApiRequest({
