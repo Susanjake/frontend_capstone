@@ -152,7 +152,7 @@ function TrainerHome() {
 
           <Divider />
 
-          <Row align="middle" gutter={18}>
+          <Row align="middle" >
             <Col span={8}>
               <Title level={4} style={{ textAlign: 'center', width: '100%', color: '#1e40af' }}>
                 Curriculum Progress

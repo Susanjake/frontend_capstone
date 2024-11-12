@@ -1,6 +1,7 @@
 
 .e-card {
     margin: 30px auto;
+    margin-right: 25px;
     background: transparent;
     box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
     position: relative;
@@ -31,19 +32,19 @@
   .infotop {
     text-align:center;
     justify-items: center;
-    font-size: 25px;
+    font-size: 46px;
     position: absolute;
-    top:4rem;
+    top:2rem;
     left: 0;
     right: 0;
     /* color: #0e7490; */
     color: #1e40af;
-    font-weight: 600;
+    font-weight: 500;
   }
   
   .name {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 400;
     position: relative;
     top: 1em;
     /* text-transform: lowercase; */

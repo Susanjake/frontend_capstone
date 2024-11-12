@@ -125,7 +125,7 @@ function StudentHome() {
   }, [])
   return (
     <>
-      <StudentDashboardCard studentname={`Hey ${data?.user?.username.capitalize()}`} trainername={data.trainer?.capitalize()} managername={data.manager?.capitalize()} />
+      <StudentDashboardCard studentname={`Hey ${data?.user?.username.capitalize()}!`} trainername={data.trainer?.capitalize()} managername={data.manager?.capitalize()} />
       <Layout style={{ margin: "0 16px" }}>
 
         {/* <Layout style={{ height: "40vh" }}>
@@ -168,7 +168,7 @@ function StudentHome() {
                     <div class="bg"></div>
                     <div class="blob"></div>
                     <div>
-                      <Progress className='attendanceprog' type="circle" size={80} percent={parseInt(data.attendance)}
+                      <Progress className='attendanceprog' type="circle" size={120} percent={parseInt(data.attendance)}
                         steps={5} style={{ minHeight: "100%" }} />
                     </div>
 
